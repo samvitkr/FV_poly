@@ -1,0 +1,184 @@
+% © 2023 Simon Toedtli <s.toedtli@jhu.edu>, all rights reserved
+clear;  clc;  close all;
+addpath '/home/skumar67/data-geyink1/skumar67/dmsuite'
+sourceFolder='../';
+% automatically add code modules to matlab path
+functionCallStack = dbstack;
+[scriptFolder, ~, ~] = fileparts(which(functionCallStack(1).file));
+[sourceFolder, ~, ~] = fileparts(scriptFolder);
+addpath(fullfile(sourceFolder, 'data_readers'), fullfile(sourceFolder, 'utilities'));
+
+% user input: specify run parameters. This assumes your data is stored in a directory with full path dataFolder/runName
+%runName = 'test_wi_6-67_1';
+%fileNr = 79000;
+ngx = 513;  % ng{i}: grid size of restart files in coordinate i, including periodic points in x, z.
+ngy = 321;  %        ghost points do not have to be included here, they are accounted for in the data reading routines
+ngz = 385;
+nCheb = 220;  % number of Chebyshev collocation points in y (has to be determined a priori)
+Lz = 2.0 * pi;
+dataFolder = fullfile(getenv('HOME'), 'research_data', 'polymer');
+Wi=1.83;
+beta=0.9;
+L_max=100;
+a=1-3/L_max^2;
+re=4667
+% read grid and generate operators
+%runFolder = fullfile(dataFolder, runName);
+%runFolder= 'C:\Users\samvi\Dropbox\SimonsProject\Finite_Vol_data\Visco_data_sample';
+%runFolder='/home/skumar67/data-geyink1/skumar67/FV_visco';
+runFolder='/home/skumar67/data-geyink1/skumar67/FV_wi_1p83'
+
+[xGridPointsDns, yGridPointsDns, ~, ~] = read_grid(runFolder, ngx, ngy);
+deltaX = xGridPointsDns(2) - xGridPointsDns(1);
+deltaZ = Lz / (ngz - 1);
+[yCheb, ~] = chebdif(nCheb, 1);
+interpY = InterpolationOperatorY(yGridPointsDns, yCheb);
+ft = SpatialFourierTransform();
+
+
+fstart=70000;
+fend=70000;
+fskip=1000;
+
+for fileNr=fstart:fskip:fend
+fileNr
+
+% read DNS data: Cartesian velocities and confirmation tensor in physical domain, represented on staggered grid
+fileNrString = num2str(fileNr, '%07d');
+[u, v, w] = read_velocity(runFolder, fileNrString, ngx, ngy, ngz);  % these arrays still contain ghost points
+confTensor = read_confirmation_tensor(runFolder, fileNrString, ngx, ngy, ngz);
+[u, v, w] = remove_velocity_ghost_points(u, v, w);
+confTensor = remove_confirmation_tensor_ghost_points(confTensor);
+
+% tranform to Fourier domain
+[uFourier, kx, kz] = ft.transform_to_fourier(u, deltaX, deltaZ);
+vFourier = ft.transform_to_fourier(v);  % no need to pass sampling rate, wavenumber object is needed only once
+wFourier = ft.transform_to_fourier(w);
+confTensorFourier = ft.transform_confirmation_tensor_to_fourier(confTensor);
+
+% collocate data spectrally in x, z
+shiftX = -0.5 * deltaX;
+shiftZ = -0.5 * deltaZ;
+uFourier = interpolate_fourier_in_z(uFourier, kz, shiftZ);
+vFourier = interpolate_fourier_in_x(vFourier, kx, shiftX);
+vFourier = interpolate_fourier_in_z(vFourier, kz, shiftZ);
+wFourier = interpolate_fourier_in_x(wFourier, kx, shiftX);
+confTensorFourier = interpolate_confirmation_tensor_fourier_in_x(confTensorFourier, kx, shiftX);
+confTensorFourier = interpolate_confirmation_tensor_fourier_in_z(confTensorFourier, kz, shiftZ);
+
+% collocate on Chebyshev grid in y using spline interpolation
+uFourier = interpY.interpolate_u_to_chebyshev_grid(uFourier);
+vFourier = interpY.interpolate_v_to_chebyshev_grid(vFourier);
+wFourier = interpY.interpolate_w_to_chebyshev_grid(wFourier);
+
+dx = FirstDerivativeXFourier(kx.get_radial_frequency_vector());
+dz = FirstDerivativeZFourier(kz.get_radial_frequency_vector());
+dy = FirstDerivativeYChebyshev(nCheb);
+
+
+confTensorFourier = interpY.interpolate_confirmation_tensor_to_chebyshev_grid(confTensorFourier);
+confTensorPhysical=ft.transform_confirmation_tensor_to_physical(confTensorFourier);
+psi=1-(confTensorPhysical.Cxx+confTensorPhysical.Cyy+confTensorPhysical.Czz)./L_max^2;
+
+polystress.tauxx=(confTensorPhysical.Cxx./psi - 1/a)./Wi;
+polystress.tauyy=(confTensorPhysical.Cyy./psi - 1/a)./Wi;
+polystress.tauzz=(confTensorPhysical.Czz./psi - 1/a)./Wi;
+polystress.tauxy=(confTensorPhysical.Cxy./psi )./Wi;
+polystress.tauxz=(confTensorPhysical.Cxz./psi )./Wi;
+polystress.tauyz=(confTensorPhysical.Cyz./psi )./Wi;
+polystressFourier.tauxx=ft.transform_to_fourier(polystress.tauxx);
+polystressFourier.tauxz=ft.transform_to_fourier(polystress.tauxz);
+fxxF=dx.compute_derivative(polystressFourier.tauxx);
+fxzF=dx.compute_derivative(polystressFourier.tauxz);
+fxx=ft.transform_to_physical(fxxF);
+fxz=ft.transform_to_physical(fxzF);
+fxy=dy.compute_derivative(polystress.tauxy);
+
+% the velocity fields were divergence-free w.r.t. the finite volume numerics, but not necessarily w.r.t the spectral
+% numerics. We therefore project onto a divergence free subspace (note: the projected fields satisfy no-through at the
+% wall, but they may have non-zero slip).
+[uFourier, vFourier, wFourier] = make_field_divergence_free(uFourier, vFourier, wFourier, kx, kz, nCheb);
+omegaXFourier = dy.compute_derivative(wFourier) - dz.compute_derivative(vFourier);
+omegaYFourier = dz.compute_derivative(uFourier) - dx.compute_derivative(wFourier);
+omegaZFourier = dx.compute_derivative(vFourier) - dy.compute_derivative(uFourier);
+omegaX = ft.transform_to_physical(omegaXFourier);
+omegaY = ft.transform_to_physical(omegaYFourier);
+omegaZ = ft.transform_to_physical(omegaZFourier);
+
+viscF=  dx.compute_derivative( dx.compute_derivative(uFourier))+...
+        dy.compute_derivative( dy.compute_derivative(uFourier))+...
+        dz.compute_derivative( dz.compute_derivative(uFourier));
+visc=beta*ft.transform_to_physical(viscF)./re;
+
+ufield=ft.transform_to_physical(uFourier);
+vfield=ft.transform_to_physical(vFourier);
+wfield=ft.transform_to_physical(wFourier);
+
+voz=vfield.*omegaZ;
+woy=wfield.*omegaY;
+
+vozFourier=vFourier.*conj(omegaZFourier);
+woyFourier=wFourier.*conj(omegaYFourier);
+
+
+
+%fm=sprintf("/home/skumar67/data-geyink1/skumar67/FV_visco/velfields_%07d.mat",fileNr)
+fnm=sprintf("velfields_%07d.mat",fileNr);
+fm=fullfile(runFolder,fnm)
+m=matfile(fm,'Writable',true)
+m.uf=u;
+m.vf=v;
+m.wf=w;
+m.uFourier=uFourier;
+m.vFourier=vFourier;
+m.wFourier=wFourier;
+m.ufield=ft.transform_to_physical(uFourier);
+m.vfield=ft.transform_to_physical(vFourier);
+m.wfield=ft.transform_to_physical(wFourier);
+
+
+
+%fmo=sprintf("/home/skumar67/data-geyink1/skumar67/Visco_data_sample/vortfields_%07d.mat",fileNr)
+%fmo=sprintf("/home/skumar67/data-geyink1/skumar67/FV_visco/vortfields_%07d.mat",fileNr)
+fno=sprintf("vortfields_%07d.mat",fileNr);
+fmo=fullfile(runFolder,fno)
+mo=matfile(fmo,'Writable',true)
+mo.omegaXFourier=omegaXFourier;
+mo.omegaYFourier=omegaYFourier;
+mo.omegaZFourier=omegaXFourier;
+mo.omegaX=omegaX;
+mo.omegaY=omegaY;
+mo.omegaZ=omegaZ;
+
+%fmt=sprintf("/home/skumar67/data-geyink1/skumar67/Visco_data_sample/transferfields_%07d.mat",fileNr)
+fnt=sprintf("transferfields_%07d.mat",fileNr)
+fmt=fullfile(runFolder,fnt)
+mt=matfile(fmt,'Writable',true)
+mt.voz=voz;
+mt.woy=woy;
+mt.visc=visc;
+mt.vozF=vozFourier;
+mt.woyF=woyFourier;
+mt.poly=((1-beta)./re)*(fxx+fxy+fxz);
+
+%fmp=sprintf("/home/skumar67/data-geyink1/skumar67/Visco_data_sample/polyforce_%07d.mat",fileNr)
+fnp=sprintf("polyfields_%07d.mat",fileNr)
+fmp=fullfile(runFolder,fnp)
+mp=matfile(fmp,'Writable',true)
+mp.fxx=fxx;
+mp.fxy=fxy;
+mp.fxz=fxz;
+mp.poly=((1-beta)./re)*(fxx+fxy+fxz);
+end
+
+
+
+
+fny="ygrid.mat";
+%fmy="/home/skumar67/data-geyink1/skumar67/FV_visco/ygrid.mat";
+fmy=fullfile(runFolder,fny)
+my=matfile(fmy,'Writable',true)
+my.yCheb=yCheb;
+
+
+
