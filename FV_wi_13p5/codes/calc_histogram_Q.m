@@ -13,7 +13,7 @@ for time=79000:79000;
 	m=matfile(ft);
 	fl=sprintf("../data/lambda_%07d.mat",time);
 	ml=matfile(fl);
-	l=ml.lambda2;
+	l=ml.Q;
 	% %load("volc.mat");
 	% %nbins=1000;
 	%mp.vozm=squeeze(mean(mean(m.voz,1),2));
@@ -41,7 +41,7 @@ for time=79000:79000;
 		volh(n)=sum(volc(i));
 		contri(n)=sum(integ(i));
 	end
-	fh=sprintf("../data/hist_l_%07d.mat",time)
+	fh=sprintf("../data/hist_q_%07d.mat",time)
 	mh=matfile(fh,'Writable',true)
 	mh.BinEdgeslambda=be;
 	mh.vol=volh;
