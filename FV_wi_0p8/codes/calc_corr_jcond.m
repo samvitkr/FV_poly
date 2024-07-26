@@ -43,13 +43,10 @@ for time=tstart:tstep:tend
 	phiuu=phiuu+conj(ufj).*m.uFourier(:,:,Ny/2+1:end);
 	phivv=phivv+conj(vfj).*m.vFourier(:,:,Ny/2+1:end);
 	phiww=phiww+conj(wfj).*m.wFourier(:,:,Ny/2+1:end);
-	
 	phiuv=phiuv+conj(ufj).*m.vFourier(:,:,Ny/2+1:end);
 	phivu=phivu+conj(vfj).*m.uFourier(:,:,Ny/2+1:end);
-	
 	phiuw=phiuw+conj(ufj).*m.wFourier(:,:,Ny/2+1:end);
 	phiwu=phiwu+conj(wfj).*m.uFourier(:,:,Ny/2+1:end);
-	
 	phivw=phivw+conj(vfj).*m.wFourier(:,:,Ny/2+1:end);
 	phiwv=phiwv+conj(wfj).*m.vFourier(:,:,Ny/2+1:end);
 end
