@@ -1,6 +1,6 @@
 close all
 clear
-
+load('../data/ygrid.mat')
 Nx=512;
 Nz=384;
 Ny=220;
@@ -40,7 +40,8 @@ mfd.Ruw=ifft2(ddfilter.*phiuw,'symmetric');
 mfd.Rwu=ifft2(ddfilter.*phiwu,'symmetric');
 mfd.Rvw=ifft2(ddfilter.*phivw,'symmetric');
 mfd.Rwv=ifft2(ddfilter.*phiwv,'symmetric');
-
+mfd.yCheb=yCheb(Ny/2+1:end);
+mfd.j=jc;
 
 fnu=sprintf('../data/vel_corr_uufilter_j_%03d.mat',jcond);
 mfu=matfile(fnu,'Writable',true);
@@ -54,3 +55,5 @@ mfu.Ruw=ifft2(uufilter.*phiuw,'symmetric');
 mfu.Rwu=ifft2(uufilter.*phiwu,'symmetric');
 mfu.Rvw=ifft2(uufilter.*phivw,'symmetric');
 mfu.Rwv=ifft2(uufilter.*phiwv,'symmetric');
+mfu.yCheb=yCheb(Ny/2+1:end);
+mfu.j=jc;

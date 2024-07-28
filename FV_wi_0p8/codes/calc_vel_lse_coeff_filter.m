@@ -19,7 +19,7 @@ L33=zeros(Nz,Nx,Ny/2);
 f=sprintf('../data/vel_corr_ddfilter_j_%03d.mat',jcond);
 %m=matfile(fn);
 load(f);
-jc=j;
+jc=j
 uij=[Ruu(1,1,jc),Ruv(1,1,jc),Ruw(1,1,jc);...
     Rvu(1,1,jc),Rvv(1,1,jc),Rvw(1,1,jc);...
     Rwu(1,1,jc),Rwv(1,1,jc),Rww(1,1,jc)];
@@ -85,7 +85,7 @@ L31=zeros(Nz,Nx,Ny/2);
 L32=zeros(Nz,Nx,Ny/2);
 L33=zeros(Nz,Nx,Ny/2);
 
-f=sprintf('../data/vel_corr_uufilter_j_%03d.mat',jcond);
+f=sprintf('../data/vel_corr_uufilter_j_%03d.mat',jcond)
 %m=matfile(fn);
 load(f);
 jc=j;
@@ -120,7 +120,7 @@ for j=1:Ny/2
     end
 end
 fn=sprintf('../data/vel_lse_uufilter_j_%03d.mat',jcond);
-mf=matfile(fn,"Writable",true);
+mf=matfile(fn,"Writable",true)
 mf.L11=real(L11);
 mf.L12=real(L12);
 mf.L13=real(L13);
