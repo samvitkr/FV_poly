@@ -18,7 +18,7 @@
 #ml java
 ml # confirm modules used
 ml matlab
-matlab -nodisplay -nosplash -nodesktop -r "calc_lambda_q_timeseries"
+matlab -nodisplay -nosplash -nodesktop -r "plot_iso_lse_filter"
 
 #calc_velgrad_x;clear all;
 #calc_velgrad_y;clear all;
