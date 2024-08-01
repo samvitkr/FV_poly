@@ -1,5 +1,5 @@
-tstart=50000;
-tend=108000;
+tstart=40000;
+tend=40000;
 tstep=1000;
 Nx=512;
 Ny=220;
@@ -21,8 +21,9 @@ Q	=single(zeros(Nz,Nx,Ny));
 
 for time=tstart:tstep:tend
 	%fvg=sprintf('velgrad_transfer_flp_%07d.mat',time);
-%	fvg=sprintf('velgrad_transfer_fhp_%07d.mat',time);
-	fvg=sprintf('velgrad_%07d.mat',time);
+	%fvg=sprintf('../data/velgrad_transfer_ddfilter_%07d.mat',time);
+	fvg=sprintf('../data/velgrad_transfer_uufilter_%07d.mat',time);
+%	fvg=sprintf('velgrad_%07d.mat',time);
 %        fo=sprintf('vortfields_%07d.mat',time);
 	mvg=matfile(fvg);
  %       mo=matfile(fo);
@@ -78,8 +79,9 @@ for j =1:Nz
                 end
         end
         %fl=sprintf("lambdaflp_%07d",time);
-	%fl=sprintf("lambdafhp_%07d",time);
-        fl=sprintf("lambda_%07d",time);
+	%fl=sprintf("../data/lambda_ddfilter_%07d",time);
+	fl=sprintf("../data/lambda_uufilter_%07d",time);
+        %fl=sprintf("lambda_%07d",time);
 	ml=matfile(fl,'Writable',true);
         ml.lambda2=single(lambda2);
         ml.Q=single(Q);
