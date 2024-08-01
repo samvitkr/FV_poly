@@ -11,15 +11,15 @@ addpath(fullfile(sourceFolder, 'data_readers'), fullfile(sourceFolder, 'utilitie
 %runName = 'test_wi_6-67_1';
 %fileNr = 79000;
 nCheb = 220;  % number of Chebyshev collocation points in y (has to be determined a priori)
-runFolder='/home/skumar67/data-geyink1/skumar67/FV_wi_13p5'
+runFolder='/home/skumar67/data-geyink1/skumar67/FV_poly_codes/FV_wi_0p8/data'
 
 fy=fullfile(runFolder,'ygrid.mat');
 load(fy);
-fileNr=79000;
+fileNr=40000;
 re=4667;
-ret=154;
-ut=ret/re;
-dnu=1/ret;
+%ret=154;
+%ut=ret/re;
+%dnu=1/ret;
 Nx=512;
 Nz=384;
 Ny=220;
@@ -34,7 +34,7 @@ kx = 2*(pi/Lx)*[0:Nx/2-1, 0, -Nx/2+1:-1];
 kz = 2*(pi/Lz)*[0:Nz/2-1, 0, -Nz/2+1:-1];
 dkx=kx(2)-kx(1);
 dkz=kz(2)-kz(1);
-yp= (1-abs(yCheb))./dnu;
+%yp= (1-abs(yCheb))./dnu;
 
 [Kx,Kz]=meshgrid(kx,kz);
 ft = SpatialFourierTransform();
@@ -47,14 +47,16 @@ fngt=sprintf("transferfields_%07d.mat",fileNr)
 fmgt=fullfile(runFolder,fngt)
 mgt=matfile(fmgt)
 
-fngf=sprintf("velgrad_transfer_flp_%07d.mat",fileNr)
-fmgf=fullfile(runFolder,fngf)
+%fngf=sprintf("velgrad_transfer_ddfilter_%07d.mat",fileNr)
+fmgf=sprintf("velgrad_transfer_uufilter_%07d.mat",fileNr)
+fmgf=fullfile(runFolder,fmgf)
 mgf=matfile(fmgf,'Writable',true)
 
-fmdname=fullfile(runFolder,'dragonfly.mat')
+fmdname=fullfile(runFolder,'filter.mat')
 md=matfile(fmdname)
 %md=matfile('dragonfly.mat')
-D=md.D;
+%D=md.dfil;
+D=md.ufil;
 
 [dudxF, kx, kz] = ft.transform_to_fourier(mg.dudx, deltaX, deltaZ);
 [dvdxF] = ft.transform_to_fourier(mg.dvdx);
@@ -97,8 +99,8 @@ mgf.dudz= single(ft.transform_to_physical( ( dudzF).*D));
 mgf.dvdz= single(ft.transform_to_physical( ( dvdzF).*D));
 mgf.dwdz= single(ft.transform_to_physical( ( dwdzF).*D));
 
-mgf.voz=single(ft.transform_to_physical( ( mgt.vozF).*(D.^2)));
-mgf.woy=single(ft.transform_to_physical( ( mgt.woyF).*(D.^2)));
+mgf.voz=single(ft.transform_to_physical( ( mgt.vozF).*(D)));
+mgf.woy=single(ft.transform_to_physical( ( mgt.woyF).*(D)));
 
-polyF= ft.transform_to_fourier(mgt.poly);
-mgf.poly=ft.transform_to_physical( ( polyF).*(D.^2));
+%polyF= ft.transform_to_fourier(mgt.poly);
+%mgf.poly=ft.transform_to_physical( ( polyF).*(D.^2));
