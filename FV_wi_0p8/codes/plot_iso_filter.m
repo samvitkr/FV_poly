@@ -8,9 +8,10 @@ lz=2*pi;
 xp=lx*[0:nx-1]/nx;
 zp=lz*[0:nz-1]/nz;
 yp=yCheb'+1;
+yp=yp(221:end);
 re=4667;
 [X,Z,Y]=meshgrid(xp,zp,yp);
-lt=0.05;
+lt=0.1;
 t=40000;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
@@ -26,7 +27,7 @@ y2=350;
 h1=figure('OuterPosition',...
     [x1 y1 x2 y2]);
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(m.Q,[2 1 3]), lt)
+permute(m.Q(1:end,1:end,111:end),[2 1 3]), lt)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
@@ -55,7 +56,7 @@ h2=figure('OuterPosition',...
     [x1 y1 x2 y2]);
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(mu.Q,[2 1 3]), lt)
+permute(mu.Q(1:end,1:end,111:end),[2 1 3]), lt)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
