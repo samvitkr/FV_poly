@@ -1,18 +1,18 @@
-%close all
-%clear
+close all
+clear
 %load('ygrid.mat')
 %
-%Nx=512;
-%Nz=384;
-%Ny=220;
-%jcond=188;
+Nx=512;
+Nz=384;
+Ny=220;
+jcond=188;
 %jc=jcond-Ny/2;
 %
 %nf=1;
 %
 %phivu=zeros(Nz,Nx,Ny/2);
 %phiozu=zeros(Nz,Nx,Ny/2);
-%
+phiozoz=zeros(Nz,Nx);
 %phivv=zeros(Nz,Nx,Ny/2);
 %phiozv=zeros(Nz,Nx,Ny/2);
 %
@@ -22,26 +22,27 @@
 %phivfx=zeros(Nz,Nx,Ny/2);
 %phiozfx=zeros(Nz,Nx,Ny/2);
 %
-%ozoz=0;
+ozoz=0;
 %
-%tstart=10000;
-%tend=108000;
-%tstep=1000;
-%nf=(tend-tstart)/tstep+1;
+tstart=10000;
+tend=108000;
+tstep=1000;
+nf=(tend-tstart)/tstep+1;
 % %load('lambda_stats.mat')
-%for time=tstart:tstep:tend
-%        time
-%        fvel=sprintf("velfields_%07d.mat",time);
-%        m=matfile(fvel);
+for time=tstart:tstep:tend
+        time
+        fvel=sprintf("../data/velfields_%07d.mat",time);
+        m=matfile(fvel);
 %	ft=sprintf("transferfields_%07d.mat",time);
 %        mt=matfile(ft);
-%	fg=sprintf("velgrad_%07d.mat",time);
-%        mg=matfile(fg);
+	fg=sprintf("../data/velgrad_%07d.mat",time);
+        mg=matfile(fg);
 %	
 %	polyxF=fft2(mt.poly(:,:,Ny/2+1:end))./(Nz*Nx);
 %	vfj=m.vFourier(:,:,jcond);
 %	vfj(1,1)=0;
-%	ozfj=fft2(mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond))./(Nz*Nx);
+	ozfj=fft2(mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond))./(Nz*Nx);
+	phiozoz=phiozoz+conj(ozfj).*(ozfj);
 %        ozfj(1,1)=0;
 %
 %	oz=mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond) - mean( mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond),'all' );
@@ -58,7 +59,8 @@
 %	
 %	phivw=phivw+conj(vfj).*m.wFourier(:,:,Ny/2+1:end);
 %        phiozw=phiozw+conj(ozfj).*m.wFourier(:,:,Ny/2+1:end);
-%end
+end
+phiozoz=phiozoz./nf;
 %
 %	phivfx=phivfx./nf;%+conj(vfj).*polyxF;
 %        phiozfx=phiozfx./nf;
@@ -102,13 +104,13 @@
 %
 %mf.ozoz=ozoz;
 %mf.j=jc;
-close all
-clear
+%close all
+%clear
 load('../data/ygrid.mat')
-Nx=512;
-Nz=384;
-Ny=220;
-jcond=188;
+%Nx=512;
+%Nz=384;
+%Ny=220;
+%jcond=188;
 jc=jcond-Ny/2;
 ddfilter=zeros(Nz,Nx,Ny/2);
 uufilter=zeros(Nz,Nx,Ny/2);
@@ -121,6 +123,8 @@ mf=matfile(fn)
 %ufj(1,1)=0;
 ddfilter=mfil.dfil(:,:,Ny/2+1:end);
 uufilter=mfil.ufil(:,:,Ny/2+1:end);
+ozozdd=sum(phiozoz.*ddfilter(jc),'all');
+ozozuu=sum(phiozoz.*uufilter(jc),'all');
 
 phivv=fft2(mf.Rvv);
 phivu=fft2(mf.Rvu);
@@ -138,7 +142,7 @@ mfd.Rvw=ifft2(ddfilter.*phivw,'symmetric');
 mfd.Rozv=ifft2(ddfilter.*phiozv,'symmetric');
 mfd.Rozu=ifft2(ddfilter.*phiozu,'symmetric');
 mfd.Rozw=ifft2(ddfilter.*phiozw,'symmetric');
-mfd.ozoz=mf.ozoz;
+mfd.ozozdd=ozozdd;
 mfd.yCheb=yCheb(Ny/2+1:end);
 mfd.j=jc;
 
@@ -151,6 +155,6 @@ mfu.Rvw=ifft2(uufilter.*phivw,'symmetric');
 mfu.Rozv=ifft2(uufilter.*phiozv,'symmetric');
 mfu.Rozu=ifft2(uufilter.*phiozu,'symmetric');
 mfu.Rozw=ifft2(uufilter.*phiozw,'symmetric');
-mfu.ozoz=mf.ozoz;
+mfu.ozozuu=ozozuu;
 mfu.yCheb=yCheb(Ny/2+1:end);
 mfu.j=jc;

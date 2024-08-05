@@ -1,13 +1,13 @@
 close all
 clear
-jcond=156;
+jcond=188;
 lt=0.05;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
-ft=sprintf('../data/velfield_lse_ddfilter_j_%03d.mat',jcond);
+ft=sprintf('../data/velfield_lse_voz_ddfilter_j_%03d.mat',jcond);
 m=matfile(ft)
-ftu=sprintf('../data/velfield_lse_uufilter_j_%03d.mat',jcond);
+ftu=sprintf('../data/velfield_lse_voz_uufilter_j_%03d.mat',jcond);
 mu=matfile(ftu)
 x1=150;
 y1=150;
@@ -77,7 +77,7 @@ grid on
 %ylabel('x')
 %zlabel('y')
 %grid on
-f1=sprintf("iso_lse_vel_Q_filter_j_%03d.fig",jcond)
+f1=sprintf("iso_lse_vel_voz_Q_filter_j_%03d.fig",jcond)
 saveas(h1,f1)
 %%
 % h2=figure('OuterPosition',...
