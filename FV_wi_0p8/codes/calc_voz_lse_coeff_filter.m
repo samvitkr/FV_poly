@@ -15,13 +15,13 @@ L31=zeros(Nz,Nx,Ny/2);
 L32=zeros(Nz,Nx,Ny/2);
 %L33=zeros(Nz,Nx,Ny/2);
 
-%L41=zeros(Nz,Nx,Ny/2);
-%L42=zeros(Nz,Nx,Ny/2);
+L41=zeros(Nz,Nx,Ny/2);
+L42=zeros(Nz,Nx,Ny/2);
 %L43=zeros(Nz,Nx,Ny/2);
 
 %mn=matfile('transferfields_mean.mat');
 fn=sprintf('../data/voz_corr_ddfilter_j_%03d.mat',jcond);
-%m=matfile(fn);
+mdd=matfile(fn)
 load(fn);
 
 %fm=sprintf('vel_force_corr_j_%03d.mat',jcond);
@@ -38,8 +38,8 @@ for j=1:Ny/2
     j
     for k=1:Nz
         for i=1:Nx
-            Rij=[Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j);...
-                Rozu(k,i,j),Rozv(k,i,j),Rozw(k,i,j)];...
+	Rij=[Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j),Rvfx(k,i,j);...
+                Rozu(k,i,j),Rozv(k,i,j),Rozw(k,i,j),Rozfx(k,i,j)];
             Rij=Rij.';
             L=Rij*(inv(uij));
             L11(k,i,j)=L(1,1);
@@ -54,8 +54,8 @@ for j=1:Ny/2
             L32(k,i,j)=L(3,2);
             %L33(k,i,j)=L(3,3);
 
-	    %L41(k,i,j)=L(4,1);
-            %L42(k,i,j)=L(4,2);
+	    L41(k,i,j)=L(4,1);
+            L42(k,i,j)=L(4,2);
             %L43(k,i,j)=L(4,3);
 
         end
@@ -72,8 +72,8 @@ mf.L22=real(L22);
 mf.L31=real(L31);
 mf.L32=real(L32);
 %mf.L33=real(L33);
-%mf.L41=real(L41);
-%mf.L42=real(L42);
+mf.L41=real(L41);
+mf.L42=real(L42);
 %mf.L43=real(L43);
 mf.j=jc;
 
@@ -95,13 +95,13 @@ L31=zeros(Nz,Nx,Ny/2);
 L32=zeros(Nz,Nx,Ny/2);
 %L33=zeros(Nz,Nx,Ny/2);
 
-%L41=zeros(Nz,Nx,Ny/2);
-%L42=zeros(Nz,Nx,Ny/2);
+L41=zeros(Nz,Nx,Ny/2);
+L42=zeros(Nz,Nx,Ny/2);
 %L43=zeros(Nz,Nx,Ny/2);
 
 %mn=matfile('transferfields_mean.mat');
 fn=sprintf('../data/voz_corr_uufilter_j_%03d.mat',jcond);
-%m=matfile(fn);
+muu=matfile(fn)
 load(fn);
 
 %fm=sprintf('vel_force_corr_j_%03d.mat',jcond);
@@ -118,8 +118,8 @@ for j=1:Ny/2
     j
     for k=1:Nz
         for i=1:Nx
-            Rij=[Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j);...
-                Rozu(k,i,j),Rozv(k,i,j),Rozw(k,i,j)];...
+		Rij=[Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j),Rvfx(k,i,j);...
+                Rozu(k,i,j),Rozv(k,i,j),Rozw(k,i,j),Rozfx(k,i,j)];
             Rij=Rij.';
             L=Rij*(inv(uij));
             L11(k,i,j)=L(1,1);
@@ -134,8 +134,8 @@ for j=1:Ny/2
             L32(k,i,j)=L(3,2);
             %L33(k,i,j)=L(3,3);
 
-            %L41(k,i,j)=L(4,1);
-            %L42(k,i,j)=L(4,2);
+            L41(k,i,j)=L(4,1);
+            L42(k,i,j)=L(4,2);
             %L43(k,i,j)=L(4,3);
 
         end
@@ -152,8 +152,8 @@ mf.L22=real(L22);
 mf.L31=real(L31);
 mf.L32=real(L32);
 %mf.L33=real(L33);
-%mf.L41=real(L41);
-%mf.L42=real(L42);
+mf.L41=real(L41);
+mf.L42=real(L42);
 %mf.L43=real(L43);
 mf.j=jc;
 

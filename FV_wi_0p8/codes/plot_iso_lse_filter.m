@@ -17,7 +17,7 @@ h1=figure('OuterPosition',...
     [x1 y1 x2 y2]);
 subplot(1,2,1)
 isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
-permute(m.Q2Q,[2 1 3]), lt)
+permute(m.Q4Q,[2 1 3]), lt, permute((1e+3)*m.fxQ4,[2 1 3]))
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
@@ -38,7 +38,7 @@ grid on
 
 subplot(1,2,2)
 isosurface( permute(mu.Z,[2 1 3]), permute(mu.X,[2 1 3]), permute(mu.Y,[2 1 3]),...
-permute(mu.Q2Q,[2 1 3]), lt)
+permute(mu.Q4Q,[2 1 3]), lt, permute((1e+3)*mu.fxQ4,[2 1 3])) 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
@@ -77,7 +77,7 @@ grid on
 %ylabel('x')
 %zlabel('y')
 %grid on
-f1=sprintf("iso_lse_vel_voz_Q_filter_j_%03d.fig",jcond)
+f1=sprintf("iso_lse_vel_voz_Q_filter_j2_%03d.fig",jcond)
 saveas(h1,f1)
 %%
 % h2=figure('OuterPosition',...
