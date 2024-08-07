@@ -1,6 +1,6 @@
 close all
 clear
-jcond=188;
+jcond=156;
 nx=512;
 nz=384;
 ny=220;
@@ -28,8 +28,10 @@ load('../data/mean_profiles.mat')
 fn=sprintf('../data/voz_lse_ddfilter_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
-v=-0.026;
-oz=0.24;
+%v=-0.026;
+%oz=0.24;
+v=-0.046;
+oz=-0.37;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -45,8 +47,11 @@ vC1(:,:,ny/2+1:end)=vlse;
 wC1(:,:,ny/2+1:end)=wlse;
 fxC1(:,:,ny/2+1:end)=fxlse;
 %%
-v=0.029;
-oz=-0.9;
+%v=0.029;
+%oz=-0.9;
+v=0.045;
+oz=-0.54;
+
 
 ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
 vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -82,7 +87,7 @@ m.fxQ4=fxC2;
 
 close all
 clear
-jcond=188;
+jcond=156;
 nx=512;
 nz=384;
 ny=220;
@@ -110,8 +115,10 @@ load('../data/mean_profiles.mat')
 fn=sprintf('../data/voz_lse_uufilter_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
-v=-0.026;
-oz=0.24;
+%v=-0.026;
+%oz=0.24;
+v=-0.046;
+oz=-0.37;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -127,8 +134,10 @@ vC1(:,:,ny/2+1:end)=vlse;
 wC1(:,:,ny/2+1:end)=wlse;
 fxC1(:,:,ny/2+1:end)=fxlse;
 %%
-v=0.029;
-oz=-0.9;
+%v=0.029;
+%oz=-0.9;
+v=0.045;
+oz=-0.54;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;

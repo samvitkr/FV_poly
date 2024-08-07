@@ -1,6 +1,6 @@
 close all
 clear
-jcond=188;
+jcond=156;
 lt=0.05;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)

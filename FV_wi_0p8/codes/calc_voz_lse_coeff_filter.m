@@ -2,7 +2,7 @@ clear all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=188;
+jcond=156;
 L11=zeros(Nz,Nx,Ny/2);
 L12=zeros(Nz,Nx,Ny/2);
 %L13=zeros(Nz,Nx,Ny/2);
@@ -31,7 +31,7 @@ load(fn);
 jc=j;
 voz=Rozv(1,1,jc);%mean(mn.voz(:,:,jc),'all');
 uij=[Rvv(1,1,jc),	voz;...
-     Rozv(1,1,jc),      ozoz];
+     Rozv(1,1,jc),      ozozdd];
 uij=uij.';
 
 for j=1:Ny/2
@@ -82,7 +82,7 @@ clear all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=188;
+jcond=156;
 L11=zeros(Nz,Nx,Ny/2);
 L12=zeros(Nz,Nx,Ny/2);
 %L13=zeros(Nz,Nx,Ny/2);
@@ -111,7 +111,7 @@ load(fn);
 jc=j;
 voz=Rozv(1,1,jc);%mean(mn.voz(:,:,jc),'all');
 uij=[Rvv(1,1,jc),       voz;...
-     Rozv(1,1,jc),      ozoz];
+     Rozv(1,1,jc),      ozozuu];
 uij=uij.';
 
 for j=1:Ny/2

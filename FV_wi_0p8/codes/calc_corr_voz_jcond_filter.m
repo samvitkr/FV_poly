@@ -5,7 +5,7 @@ clear
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=188;
+jcond=156;
 %jc=jcond-Ny/2;
 %
 %nf=1;
@@ -115,7 +115,7 @@ jc=jcond-Ny/2;
 ddfilter=zeros(Nz,Nx,Ny/2);
 uufilter=zeros(Nz,Nx,Ny/2);
 mfil=matfile('../data/filter.mat')
-fn=sprintf('../data/voz_corr_j_%03d.mat',jcond);
+fn=sprintf('../data/voz_woy_corr_j_%03d.mat',jcond);
 mf=matfile(fn)
 %dfj=mfil.dfil(:,:,jcond);
 %ufj=mfil.ufil(:,:,jcond);
