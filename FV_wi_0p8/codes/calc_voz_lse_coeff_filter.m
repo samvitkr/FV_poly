@@ -29,10 +29,11 @@ load(fn);
 %load(fm);
 
 jc=j;
-voz=Rozv(1,1,jc);%mean(mn.voz(:,:,jc),'all');
-uij=[Rvv(1,1,jc),	voz;...
-     Rozv(1,1,jc),      ozozdd];
-uij=uij.';
+voz=ozv;
+uij=[vv,       voz;...
+     ozv,      ozoz];
+     
+     uij=uij.';
 
 for j=1:Ny/2
     j
@@ -109,9 +110,10 @@ load(fn);
 %load(fm);
 
 jc=j;
-voz=Rozv(1,1,jc);%mean(mn.voz(:,:,jc),'all');
-uij=[Rvv(1,1,jc),       voz;...
-     Rozv(1,1,jc),      ozozuu];
+%voz=Rozv(1,1,jc);%mean(mn.voz(:,:,jc),'all');
+voz=ozv;
+uij=[vv,       voz;...
+     ozv,      ozoz];
 uij=uij.';
 
 for j=1:Ny/2

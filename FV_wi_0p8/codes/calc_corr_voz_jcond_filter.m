@@ -126,6 +126,10 @@ uufilter=mfil.ufil(:,:,Ny/2+1:end);
 ozozdd=sum(phiozoz.*ddfilter(jc),'all');
 ozozuu=sum(phiozoz.*uufilter(jc),'all');
 
+ozoz=sum(phiozoz,'all');
+vv=mf.Rvv(1,1,jc);
+ozv=mf.Rozv(1,1,jc);
+
 phivv=fft2(mf.Rvv);
 phivu=fft2(mf.Rvu);
 phivw=fft2(mf.Rvw);
@@ -146,8 +150,12 @@ mfd.Rozv=ifft2(ddfilter.*phiozv,'symmetric');
 mfd.Rozu=ifft2(ddfilter.*phiozu,'symmetric');
 mfd.Rozw=ifft2(ddfilter.*phiozw,'symmetric');
 mfd.Rozfx=ifft2(ddfilter.*phiozfx,'symmetric');
-
 mfd.ozozdd=ozozdd;
+
+mfd.ozoz=ozoz;
+mfd.vv=vv;
+mfd.ozv=ozv;
+
 mfd.yCheb=yCheb(Ny/2+1:end);
 mfd.j=jc;
 
@@ -165,5 +173,10 @@ mfu.Rozw=ifft2(uufilter.*phiozw,'symmetric');
 mfu.Rozfx=ifft2(uufilter.*phiozfx,'symmetric');
 
 mfu.ozozuu=ozozuu;
+
+mfu.ozoz=ozoz;
+mfu.vv=vv;
+mfu.ozv=ozv;
+
 mfu.yCheb=yCheb(Ny/2+1:end);
 mfu.j=jc;
