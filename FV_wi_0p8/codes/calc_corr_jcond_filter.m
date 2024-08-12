@@ -40,6 +40,13 @@ mfd.Ruw=ifft2(ddfilter.*phiuw,'symmetric');
 mfd.Rwu=ifft2(ddfilter.*phiwu,'symmetric');
 mfd.Rvw=ifft2(ddfilter.*phivw,'symmetric');
 mfd.Rwv=ifft2(ddfilter.*phiwv,'symmetric');
+mfd.uu=mf.Ruu(1,1,jc);
+mfd.uv=mf.Ruv(1,1,jc);
+mfd.vv=mf.Rvv(1,1,jc);
+mfd.vw=mf.Rvw(1,1,jc);
+mfd.uw=mf.Ruw(1,1,jc);
+mfd.ww=mf.Rww(1,1,jc);
+
 mfd.yCheb=yCheb(Ny/2+1:end);
 mfd.j=jc;
 
@@ -55,5 +62,12 @@ mfu.Ruw=ifft2(uufilter.*phiuw,'symmetric');
 mfu.Rwu=ifft2(uufilter.*phiwu,'symmetric');
 mfu.Rvw=ifft2(uufilter.*phivw,'symmetric');
 mfu.Rwv=ifft2(uufilter.*phiwv,'symmetric');
+mfu.uu=mf.Ruu(1,1,jc);
+mfu.uv=mf.Ruv(1,1,jc);
+mfu.vv=mf.Rvv(1,1,jc);
+mfu.vw=mf.Rvw(1,1,jc);
+mfu.uw=mf.Ruw(1,1,jc);
+mfu.ww=mf.Rww(1,1,jc);
+
 mfu.yCheb=yCheb(Ny/2+1:end);
 mfu.j=jc;

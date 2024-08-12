@@ -2,7 +2,7 @@ clear all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=188;
 L11=zeros(Nz,Nx,Ny/2);
 L12=zeros(Nz,Nx,Ny/2);
 %L13=zeros(Nz,Nx,Ny/2);
@@ -83,7 +83,7 @@ clear all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=188;
 L11=zeros(Nz,Nx,Ny/2);
 L12=zeros(Nz,Nx,Ny/2);
 %L13=zeros(Nz,Nx,Ny/2);
