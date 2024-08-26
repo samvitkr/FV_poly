@@ -1,6 +1,6 @@
 close all
 clear
-jcond=188;
+jcond=156;
 nx=512;
 nz=384;
 ny=220;
@@ -29,11 +29,11 @@ fn=sprintf('../data/voz_lse_ddfilter_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
 %j=188;
-v=-0.0255;
-oz=0.302;
+%v=-0.0255;
+%oz=0.302;
 
-%v=-0.046;
-%oz=-0.37;
+v=-0.046;
+oz=-0.37;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -48,12 +48,17 @@ uC1(:,:,ny/2+1:end)=ulse;
 vC1(:,:,ny/2+1:end)=vlse;
 wC1(:,:,ny/2+1:end)=wlse;
 fxC1(:,:,ny/2+1:end)=fxlse;
-%%
-v=0.03;
-oz=-0.74;
+uC1(:,:,1:ny/2)=flip(ulse,3);
+vC1(:,:,1:ny/2)=flip(-vlse,3);
+wC1(:,:,1:ny/2)=flip(wlse,3);
+fxC1(:,:,1:ny/2)=flip(fxlse,3);
 
-%v=0.045;
-%oz=-0.54;
+%%
+%v=0.03;
+%oz=-0.74;
+
+v=0.045;
+oz=-0.54;
 
 
 ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
@@ -69,6 +74,11 @@ uC2(:,:,ny/2+1:end)=ulse;
 vC2(:,:,ny/2+1:end)=vlse;
 wC2(:,:,ny/2+1:end)=wlse;
 fxC2(:,:,ny/2+1:end)=fxlse;
+uC2(:,:,1:ny/2)=flip(ulse,3);
+vC2(:,:,1:ny/2)=flip(-vlse,3);
+wC2(:,:,1:ny/2)=flip(wlse,3);
+fxC2(:,:,1:ny/2)=flip(fxlse,3);
+
 %%
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
@@ -90,7 +100,7 @@ m.fxQ4=fxC2;
 
 close all
 clear
-jcond=188;
+jcond=156;
 nx=512;
 nz=384;
 ny=220;
@@ -119,11 +129,11 @@ fn=sprintf('../data/voz_lse_uufilter_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
 %j=188;
-v=-0.0255;
-oz=0.302;
+%v=-0.0255;
+%oz=0.302;
 
-%v=-0.046;
-%oz=-0.37;
+v=-0.046;
+oz=-0.37;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -138,13 +148,18 @@ uC1(:,:,ny/2+1:end)=ulse;
 vC1(:,:,ny/2+1:end)=vlse;
 wC1(:,:,ny/2+1:end)=wlse;
 fxC1(:,:,ny/2+1:end)=fxlse;
+
+uC1(:,:,1:ny/2)=flip(ulse,3);
+vC1(:,:,1:ny/2)=flip(-vlse,3);
+wC1(:,:,1:ny/2)=flip(wlse,3);
+fxC1(:,:,1:ny/2)=flip(fxlse,3);
 %%
 
-v=0.03;
-oz=-0.74;
+%v=0.03;
+%oz=-0.74;
 
-%v=0.045;
-%oz=-0.54;
+v=0.045;
+oz=-0.54;
 
  ulse=v*ml.L11+oz*ml.L12;%+w*ml.L13;
  vlse=v*ml.L21+oz*ml.L22;%+w*ml.L23;
@@ -159,6 +174,11 @@ uC2(:,:,ny/2+1:end)=ulse;
 vC2(:,:,ny/2+1:end)=vlse;
 wC2(:,:,ny/2+1:end)=wlse;
 fxC2(:,:,ny/2+1:end)=fxlse;
+uC2(:,:,1:ny/2)=flip(ulse,3);
+vC2(:,:,1:ny/2)=flip(-vlse,3);
+wC2(:,:,1:ny/2)=flip(wlse,3);
+fxC2(:,:,1:ny/2)=flip(fxlse,3);
+
 %%
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);

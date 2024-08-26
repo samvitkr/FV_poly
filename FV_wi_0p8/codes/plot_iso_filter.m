@@ -19,12 +19,21 @@ t=40000;
 ft=sprintf('../data/lambda_ddfilter_%07d.mat',t);
 m=matfile(ft)
 Qm=mean(m.Q(1:end,1:end,111:end)  ,[1 2]);
-Qrd=rms(m.Q(1:end,1:end,111:end)-Qm,[1,2]);
+% Qrd=rms(m.Q(1:end,1:end,111:end)-Qm,[1,2]);
+Qrd=rms(m.Q(1:end,1:end,111:end),[1,2]);
 
 ftu=sprintf('../data/lambda_uufilter_%07d.mat',t);
 mu=matfile(ftu)
 Qm=mean(mu.Q(1:end,1:end,111:end)  ,[1 2]);
-Qru=rms(mu.Q(1:end,1:end,111:end)-Qm,[1,2]);
+% Qru=rms(mu.Q(1:end,1:end,111:end)-Qm,[1,2]);
+Qru=rms(m.Q(1:end,1:end,111:end),[1,2]);
+
+fdd=sprintf('../data/velgrad_transfer_ddfilter_%07d.mat',t);
+mdd=matfile(fdd)
+
+fuu=sprintf('../data/velgrad_transfer_uufilter_%07d.mat',t);
+muu=matfile(fuu)
+
 
 x1=150;
 y1=150;
@@ -33,7 +42,7 @@ y2=350;
 h1=figure('OuterPosition',...
     [x1 y1 x2 y2]);
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(m.Q(1:end,1:end,111:end)./Qrd,[2 1 3]), lt)
+permute(m.Q(1:end,1:end,111:end)./Qrd,[2 1 3]), lt, permute(mdd.poly(1:end,1:end,111:end),[2 1 3]))
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
@@ -52,17 +61,17 @@ ylabel('x')
 zlabel('y')
 grid on
 
-f1=sprintf("iso_Q_ddfilter_%07d.fig",t)
+f1=sprintf("iso_Q_poly2_ddfilter_%07d.fig",t)
 saveas(h1,f1)
 
 
-close all
+%close all
 
 h2=figure('OuterPosition',...
     [x1 y1 x2 y2]);
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(mu.Q(1:end,1:end,111:end)./Qru,[2 1 3]), lt)
+permute(mu.Q(1:end,1:end,111:end)./Qru,[2 1 3]), lt, permute(mdd.poly(1:end,1:end,111:end),[2 1 3]))
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
@@ -81,5 +90,5 @@ ylabel('x')
 zlabel('y')
 grid on
 
-f2=sprintf("iso_Q_uufilter_%07d.fig",t)
+f2=sprintf("iso_Q_poly2_uufilter_%07d.fig",t)
 saveas(h2,f2)
