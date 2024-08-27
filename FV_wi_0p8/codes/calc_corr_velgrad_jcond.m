@@ -74,25 +74,25 @@ for time=tstart:tstep:tend
 	phivw=phivw+conj(vfj).*m.wFourier(:,:,Ny/2+1:end);
 %	phiwv=phiwv+conj(wfj).*m.vFourier(:,:,Ny/2+1:end);
 
-        phiududx=phiududx+conj(ufj).*mg.dudxF(:,:,Ny/2+1:end);
-	phiudvdx=phiudvdx+conj(ufj).*mg.dvdxF(:,:,Ny/2+1:end);
-	phiudwdx=phiudwdx+conj(ufj).*mg.dwdxF(:,:,Ny/2+1:end);
-	phiududy=phiududy+conj(ufj).*mg.dudyF(:,:,Ny/2+1:end);
-	phiudvdy=phiudvdy+conj(ufj).*mg.dvdyF(:,:,Ny/2+1:end);
-	phiudwdy=phiudwdy+conj(ufj).*mg.dwdyF(:,:,Ny/2+1:end);
-	phiududz=phiududz+conj(ufj).*mg.dudzF(:,:,Ny/2+1:end);
-	phiudvdz=phiudvdz+conj(ufj).*mg.dvdzF(:,:,Ny/2+1:end);
-	phiudwdz=phiudwdz+conj(ufj).*mg.dwdzF(:,:,Ny/2+1:end);	
+        phiududx=phiududx+conj(ufj).*fft2(mg.dudx(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudvdx=phiudvdx+conj(ufj).*fft2(mg.dvdx(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudwdx=phiudwdx+conj(ufj).*fft2(mg.dwdx(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiududy=phiududy+conj(ufj).*fft2(mg.dudy(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudvdy=phiudvdy+conj(ufj).*fft2(mg.dvdy(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudwdy=phiudwdy+conj(ufj).*fft2(mg.dwdy(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiududz=phiududz+conj(ufj).*fft2(mg.dudz(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudvdz=phiudvdz+conj(ufj).*fft2(mg.dvdz(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiudwdz=phiudwdz+conj(ufj).*fft2(mg.dwdz(:,:,Ny/2+1:end))./(Nx*Nz);	
 
-        phivdudx=phivdudx+conj(vfj).*mg.dudxF(:,:,Ny/2+1:end);
-        phivdvdx=phivdvdx+conj(vfj).*mg.dvdxF(:,:,Ny/2+1:end);
-        phivdwdx=phivdwdx+conj(vfj).*mg.dwdxF(:,:,Ny/2+1:end);
-        phivdudy=phivdudy+conj(vfj).*mg.dudyF(:,:,Ny/2+1:end);
-        phivdvdy=phivdvdy+conj(vfj).*mg.dvdyF(:,:,Ny/2+1:end);
-        phivdwdy=phivdwdy+conj(vfj).*mg.dwdyF(:,:,Ny/2+1:end);
-        phivdudz=phivdudz+conj(vfj).*mg.dudzF(:,:,Ny/2+1:end);
-        phivdvdz=phivdvdz+conj(vfj).*mg.dvdzF(:,:,Ny/2+1:end);
-        phivdwdz=phivdwdz+conj(vfj).*mg.dwdzF(:,:,Ny/2+1:end);
+        phivdudx=phivdudx+conj(vfj).*fft2(mg.dudx(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdvdx=phivdvdx+conj(vfj).*fft2(mg.dvdx(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdwdx=phivdwdx+conj(vfj).*fft2(mg.dwdx(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdudy=phivdudy+conj(vfj).*fft2(mg.dudy(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdvdy=phivdvdy+conj(vfj).*fft2(mg.dvdy(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdwdy=phivdwdy+conj(vfj).*fft2(mg.dwdy(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdudz=phivdudz+conj(vfj).*fft2(mg.dudz(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdvdz=phivdvdz+conj(vfj).*fft2(mg.dvdz(:,:,Ny/2+1:end))./(Nx*Nz);
+        phivdwdz=phivdwdz+conj(vfj).*fft2(mg.dwdz(:,:,Ny/2+1:end))./(Nx*Nz);
 
 end
 
