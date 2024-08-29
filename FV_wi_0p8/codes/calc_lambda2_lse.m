@@ -2,20 +2,20 @@ Nx=512;
 Ny=220;
 Nz=384;
 jcond=156;
-S_11	=single(zeros(Nz,Nx,Ny));
-S_12	=single(zeros(Nz,Nx,Ny));
-S_13	=single(zeros(Nz,Nx,Ny));
-S_22	=single(zeros(Nz,Nx,Ny));
-S_23	=single(zeros(Nz,Nx,Ny));
-S_33	=single(zeros(Nz,Nx,Ny));
-O_21	=single(zeros(Nz,Nx,Ny));
-O_13	=single(zeros(Nz,Nx,Ny));
-O_32	=single(zeros(Nz,Nx,Ny));
-lambda2	=single(zeros(Nz,Nx,Ny));
-Q	=single(zeros(Nz,Nx,Ny));
+S_11	=single(zeros(Nz,Nx,Ny/2));
+S_12	=single(zeros(Nz,Nx,Ny/2));
+S_13	=single(zeros(Nz,Nx,Ny/2));
+S_22	=single(zeros(Nz,Nx,Ny/2));
+S_23	=single(zeros(Nz,Nx,Ny/2));
+S_33	=single(zeros(Nz,Nx,Ny/2));
+O_21	=single(zeros(Nz,Nx,Ny/2));
+O_13	=single(zeros(Nz,Nx,Ny/2));
+O_32	=single(zeros(Nz,Nx,Ny/2));
+lambda2	=single(zeros(Nz,Nx,Ny/2));
+Q	=single(zeros(Nz,Nx,Ny/2));
 
 fvg=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
-mvg=matfile(fvg);
+mvg=matfile(fvg,'Writable',true);
 
 S_11=mvg.dudx;
 S_12=0.5*( mvg.dudy+mvg.dvdx );
@@ -36,7 +36,7 @@ S = zeros(3,3);
 
 for j =1:Nz
         for i =1:Nx
-        for k =1:Ny
+        for k =1:Ny/2
         S(1,1) = S_11(j,i,k);%mvg.dudx(i,j,k);
         S(1,2) = S_12(j,i,k);%0.5*( mvg.dudy(i,j,k) +mvg.dvdx(i,j,k) );
         S(1,3) = S_13(j,i,k);%0.5*( mvelgz.dudz(i,j,kstart+k)+mvg.dwdx(i,j,k));
@@ -70,7 +70,7 @@ mvg.Q=single(Q);
 %%
 clear mvg S_11 S_12 S_13 S_22 S_23 S_33 O_21 O_13 O_32
 fvg=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
-mvg=matfile(fvg);
+mvg=matfile(fvg,'Writable',true);
 
 S_11=mvg.dudx;
 S_12=0.5*( mvg.dudy+mvg.dvdx );
@@ -91,7 +91,7 @@ S = zeros(3,3);
 
 for j =1:Nz
         for i =1:Nx
-        for k =1:Ny
+        for k =1:Ny/2
         S(1,1) = S_11(j,i,k);%mvg.dudx(i,j,k);
         S(1,2) = S_12(j,i,k);%0.5*( mvg.dudy(i,j,k) +mvg.dvdx(i,j,k) );
         S(1,3) = S_13(j,i,k);%0.5*( mvelgz.dudz(i,j,kstart+k)+mvg.dwdx(i,j,k));
