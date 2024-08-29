@@ -35,13 +35,13 @@ L112=zeros(Nz,Nx,Ny/2);
 L121=zeros(Nz,Nx,Ny/2);
 L122=zeros(Nz,Nx,Ny/2);
 
-fn=sprintf('vel_corr_j_%03d.mat',jcond);
+fn=sprintf('../data/velgrad_corr_j_%03d.mat',jcond);
 
 %m=matfile(fn);
 load(fn);
 jc=j;
-uij=[Ruu(1,1,jc),Ruv(1,1,jc),Ruw(1,1,jc);...
-    Rvu(1,1,jc),Rvv(1,1,jc),Rvw(1,1,jc)];...
+uij=[Ruu(1,1,jc),Ruv(1,1,jc);...,Ruw(1,1,jc);...
+    Rvu(1,1,jc),Rvv(1,1,jc)];...,Rvw(1,1,jc)];...
     %Rwu(1,1,jc),Rwv(1,1,jc),Rww(1,1,jc)];
 uij=uij.';
 
@@ -95,7 +95,7 @@ for j=1:Ny/2
 end
 
 
-fn=sprintf('vel_lse_j_%03d.mat',jcond);
+fn=sprintf('../data/velgrad_lse_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
 mf.L11=real(L11);
 mf.L12=real(L12);
