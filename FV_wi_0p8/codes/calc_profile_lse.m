@@ -1,7 +1,7 @@
 close all
 clear
 jcond=156;
-lt=0.007;
+lt=13;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
@@ -22,8 +22,8 @@ nl2m=squeeze(mean(nl2,[1 2]));
 nl4m=squeeze(mean(nl4,[1 2]));
 nl2q=squeeze(mean(nl2.*(m.Q>0),[1 2]));
 nl4q=squeeze(mean(nl4.*(mu.Q>0),[1 2]));
-nl2qrms=squeeze(mean(nl2.*(m.Q./qrmsd>1),[1 2]));
-nl4qrms=squeeze(mean(nl4.*(mu.Q./qrmsu>1),[1 2]));
+nl2qrms=squeeze(mean(nl2.*(m.Q./qrmsd>lt),[1 2]));
+nl4qrms=squeeze(mean(nl4.*(mu.Q./qrmsu>lt),[1 2]));
 nl2d=squeeze(mean(nl2.*(nl2<0),[1 2]));
 nl2u=squeeze(mean(nl2.*(nl2>0),[1 2]));
 nl4d=squeeze(mean(nl4.*(nl4<0),[1 2]));

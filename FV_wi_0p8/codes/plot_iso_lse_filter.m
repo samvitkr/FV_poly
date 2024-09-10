@@ -1,15 +1,16 @@
 close all
 clear
-jcond=156;
-lt=0.007;
+jcond=188;
+%lt=0.05;
+lt=13;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
 load('../data/ygrid.mat')
-ft =sprintf('../data/velgradfield_lse_ddfilter_Q4_j_%03d.mat',jcond);
-m=matfile(ft)
-ftu=sprintf('../data/velgradfield_lse_uufilter_Q4_j_%03d.mat',jcond);
-mu=matfile(ftu)
+ft =sprintf('../data/velgradfield_lseQ2_dfil_j_%03d.mat',jcond);
+m=matfile(ft,'Writable',true)
+ftu=sprintf('../data/velgradfield_lseQ2_ufil_j_%03d.mat',jcond);
+mu=matfile(ftu,'Writable',true)
 
 qrmsd=rms(m.Q,[1 2]);
 qrmsu=rms(mu.Q,[1 2]);
@@ -28,7 +29,7 @@ subplot(1,2,1)
 %permute(q,[2 1 3]), lt, permute((1e+3)*m.fxQ2,[2 1 3]))
 
 isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
-permute(m.Q,[2 1 3]), lt, permute(-nld,[2 1 3]))
+permute(m.Q./qrmsd,[2 1 3]), lt, permute(-nld,[2 1 3]))
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
@@ -39,8 +40,8 @@ colormap jet
 colorbar
 lightangle(-45,-90)
 axis equal
-ylim([-1 1])
-xlim([-0.5 0.5])
+% ylim([-1 1])
+% xlim([-0.5 0.5])
 % zlim([0 0.4])
 view(45,45)
 xlabel('z')
@@ -53,7 +54,7 @@ subplot(1,2,2)
 %permute(qu,[2 1 3]), lt, permute((1e+3)*mu.fxQ2,[2 1 3])) 
 
 isosurface( permute(mu.Z,[2 1 3]), permute(mu.X,[2 1 3]), permute(mu.Y,[2 1 3]),...
-permute(mu.Q,[2 1 3]), lt, permute(-nlu,[2 1 3])) 
+permute(mu.Q./qrmsu,[2 1 3]), lt, permute(-nlu,[2 1 3])) 
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)
@@ -64,8 +65,8 @@ colormap jet
 colorbar
 lightangle(-45,-90)
 axis equal
-ylim([-1 1])
-xlim([-0.5 0.5])
+% ylim([-1 1])
+% xlim([-0.5 0.5])
 % zlim([0 0.4])
 view(45,45)
 xlabel('z')

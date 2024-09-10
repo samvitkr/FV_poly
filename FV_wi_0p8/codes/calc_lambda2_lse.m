@@ -1,7 +1,7 @@
 Nx=512;
 Ny=220;
 Nz=384;
-jcond=156;
+jcond=188;
 S_11	=single(zeros(Nz,Nx,Ny/2));
 S_12	=single(zeros(Nz,Nx,Ny/2));
 S_13	=single(zeros(Nz,Nx,Ny/2));
@@ -14,8 +14,8 @@ O_32	=single(zeros(Nz,Nx,Ny/2));
 lambda2	=single(zeros(Nz,Nx,Ny/2));
 Q	=single(zeros(Nz,Nx,Ny/2));
 
-fvg=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
-mvg=matfile(fvg,'Writable',true);
+fvg=sprintf('../data/velgradfield_lseQ4_dfil_j_%03d.mat',jcond);
+mvg=matfile(fvg,'Writable',true)
 
 S_11=mvg.dudx;
 S_12=0.5*( mvg.dudy+mvg.dvdx );
@@ -69,7 +69,7 @@ mvg.Q=single(Q);
 
 %%
 clear mvg S_11 S_12 S_13 S_22 S_23 S_33 O_21 O_13 O_32
-fvg=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+fvg=sprintf('../data/velgradfield_lseQ4_ufil_j_%03d.mat',jcond)
 mvg=matfile(fvg,'Writable',true);
 
 S_11=mvg.dudx;

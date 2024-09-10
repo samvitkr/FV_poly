@@ -5,7 +5,7 @@ load('../data/ygrid.mat')
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=188;
 jc=jcond-Ny/2;
 
 nf=1;

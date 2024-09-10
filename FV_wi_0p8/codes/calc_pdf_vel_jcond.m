@@ -3,7 +3,7 @@ close all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=188;
 tstart=10000;
 tend=108000;
 tstep=1000;
@@ -18,7 +18,7 @@ density=zeros(nbin,nbin);
 %load('lambda_stats.mat')
 for time=tstart:tstep:tend
         time
-        fvel=sprintf("velfields_%07d.mat",time);
+        fvel=sprintf("../data/velfields_%07d.mat",time);
          m=matfile(fvel);
          ul=reshape( m.ufield(:,:,jcond)-mean(m.ufield(:,:,jcond),"all") ,Nx*Nz,1 );
          vl=reshape( m.vfield(:,:,jcond) ,Nx*Nz,1 );
@@ -28,7 +28,7 @@ for time=tstart:tstep:tend
 end
 density=density./nf;
 
-fn=sprintf('jointpdf_uv_j_%03d.mat',jcond);
+fn=sprintf('../data/jointpdf_uv_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
 mf.density=density;
 mf.bandwidth=bandwidth;

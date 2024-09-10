@@ -1,6 +1,6 @@
 close all
 clear
-jcond=156;
+jcond=188;
 
 nx=512;
 nz=384;
@@ -29,8 +29,13 @@ load('../data/mean_profiles.mat')
 fn=sprintf('../data/velgrad_lse_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
-u=-0.115;
-v=0.065;
+%jcond=156
+%u=-0.115;
+%v=0.065;
+
+%jcond=188
+u=-0.1188;
+v=0.0647;
    ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
    wlse=fftshift(fftshift(u*ml.L31+  v*ml.L32,1),2);...+w*ml.L33;
@@ -85,8 +90,13 @@ m.Y=Y;
 m.Z=Z;
 
 %%
-u=0.095;
-v=-0.05;
+%jcond=156;
+%u=0.095;
+%v=-0.05;
+%jcond=188;
+u=0.0976;
+v=-0.0506;
+
    ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
    wlse=fftshift(fftshift(u*ml.L31+  v*ml.L32,1),2);...+w*ml.L33;
