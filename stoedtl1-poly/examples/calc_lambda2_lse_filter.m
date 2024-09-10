@@ -36,7 +36,10 @@ ft = SpatialFourierTransform();
 
 
 jcond=156;
-fn=sprintf('velfield_lse_uufilter_j_%03d.mat',jcond);
+fn=sprintf('velfield_lse_voz_uufilter_j_%03d.mat',jcond);
+%fn=sprintf('velfield_lse_voz_ddfilter_j_%03d.mat',jcond);
+%fn=sprintf('velfield_lse_ddfilter_j_%03d.mat',jcond);
+%fn=sprintf('velfield_lse_uufilter_j_%03d.mat',jcond);
 fn=fullfile(runFolder,fn);
 mv=matfile(fn,'Writable',true)
 
@@ -131,6 +134,9 @@ dwdz=ft.transform_to_physical(dz.compute_derivative(wFourier));
 	%ml=matfile(fl,'Writable',true);
         mv.Q2lambda2=single(lambda2);
         mv.Q2Q=single(Q);
+	mv.Q2omegaz=single(omegaZ);
+	mv.Q2omegay=single(omegaY);
+	mv.Q2omegax=single(omegaX);
 
 dudx=ft.transform_to_physical(dx.compute_derivative(uFourierq4));
 dvdx=ft.transform_to_physical(dx.compute_derivative(vFourierq4));
@@ -187,4 +193,6 @@ dwdz=ft.transform_to_physical(dz.compute_derivative(wFourierq4));
         end
 	mv.Q4lambda2=single(lambda2);
         mv.Q4Q=single(Q);
-
+	mv.Q4omegaz=single(omegaZ);
+        mv.Q4omegay=single(omegaY);
+        mv.Q4omegax=single(omegaX);

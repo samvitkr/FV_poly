@@ -47,16 +47,16 @@ fngt=sprintf("transferfields_%07d.mat",fileNr)
 fmgt=fullfile(runFolder,fngt)
 mgt=matfile(fmgt)
 
-fmgf=sprintf("velgrad_transfer_ddfilter_%07d.mat",fileNr)
-%fmgf=sprintf("velgrad_transfer_uufilter_%07d.mat",fileNr)
+%fngf=sprintf("velgrad_transfer_ddfilter_%07d.mat",fileNr)
+fmgf=sprintf("velgrad_transfer_uufilter_%07d.mat",fileNr)
 fmgf=fullfile(runFolder,fmgf)
 mgf=matfile(fmgf,'Writable',true)
 
 fmdname=fullfile(runFolder,'filter.mat')
 md=matfile(fmdname)
 %md=matfile('dragonfly.mat')
-D=md.dfil;
-%D=md.ufil;
+%D=md.dfil;
+D=md.ufil;
 
 [dudxF, kx, kz] = ft.transform_to_fourier(mg.dudx, deltaX, deltaZ);
 [dvdxF] = ft.transform_to_fourier(mg.dvdx);
@@ -102,5 +102,5 @@ mgf.dwdz= single(ft.transform_to_physical( ( dwdzF).*D));
 mgf.voz=single(ft.transform_to_physical( ( mgt.vozF).*(D)));
 mgf.woy=single(ft.transform_to_physical( ( mgt.woyF).*(D)));
 
-polyF= ft.transform_to_fourier(mgt.poly);
-mgf.poly=ft.transform_to_physical( ( polyF).*(D));
+%polyF= ft.transform_to_fourier(mgt.poly);
+%mgf.poly=ft.transform_to_physical( ( polyF).*(D.^2));
