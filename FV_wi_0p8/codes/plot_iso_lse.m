@@ -5,7 +5,7 @@ lt=0.01;
 fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 load('../data/ygrid.mat')
-ft=sprintf('../data/velfield_lse_j_%03d.mat',jcond);
+ft=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
 m=matfile(ft)
 
 m=matfile(ft)

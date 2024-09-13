@@ -1,7 +1,7 @@
 Nx=512;
 Ny=220;
 Nz=384;
-jcond=188;
+jcond=156;
 S_11	=single(zeros(Nz,Nx,Ny/2));
 S_12	=single(zeros(Nz,Nx,Ny/2));
 S_13	=single(zeros(Nz,Nx,Ny/2));
@@ -13,10 +13,24 @@ O_13	=single(zeros(Nz,Nx,Ny/2));
 O_32	=single(zeros(Nz,Nx,Ny/2));
 lambda2	=single(zeros(Nz,Nx,Ny/2));
 Q	=single(zeros(Nz,Nx,Ny/2));
-
-fvg=sprintf('../data/velgradfield_lseQ4_dfil_j_%03d.mat',jcond);
+fvg=sprintf('../data/velgradfield_lseQ2_voz_j_%03d.mat',jcond);
 mvg=matfile(fvg,'Writable',true)
+fl=size(mvg.dudy);
+if(fl(3)>Ny/2)
+	mvg.u=mvg.u(1:end,1:end,111:end);
+	mvg.v=mvg.v(1:end,1:end,111:end);
+	mvg.w=mvg.w(1:end,1:end,111:end);
+	mvg.dudx=mvg.dudx(1:end,1:end,111:end);
+	mvg.dvdx=mvg.dvdx(1:end,1:end,111:end);
+	mvg.dwdx=mvg.dwdx(1:end,1:end,111:end);
+	mvg.dudy=mvg.dudy(1:end,1:end,111:end);
+        mvg.dvdy=mvg.dvdy(1:end,1:end,111:end);
+        mvg.dwdy=mvg.dwdy(1:end,1:end,111:end);
+	mvg.dudz=mvg.dudz(1:end,1:end,111:end);
+        mvg.dvdz=mvg.dvdz(1:end,1:end,111:end);
+        mvg.dwdz=mvg.dwdz(1:end,1:end,111:end);
 
+end
 S_11=mvg.dudx;
 S_12=0.5*( mvg.dudy+mvg.dvdx );
 S_13=0.5*( mvg.dudz+mvg.dwdx );
@@ -69,9 +83,24 @@ mvg.Q=single(Q);
 
 %%
 clear mvg S_11 S_12 S_13 S_22 S_23 S_33 O_21 O_13 O_32
-fvg=sprintf('../data/velgradfield_lseQ4_ufil_j_%03d.mat',jcond)
+fvg=sprintf('../data/velgradfield_lseQ4_voz_j_%03d.mat',jcond)
 mvg=matfile(fvg,'Writable',true);
+fl=size(mvg.dudy);
+if(fl(3)>Ny/2)
+        mvg.u=mvg.u(1:end,1:end,111:end);
+        mvg.v=mvg.v(1:end,1:end,111:end);
+        mvg.w=mvg.w(1:end,1:end,111:end);
+        mvg.dudx=mvg.dudx(1:end,1:end,111:end);
+        mvg.dvdx=mvg.dvdx(1:end,1:end,111:end);
+        mvg.dwdx=mvg.dwdx(1:end,1:end,111:end);
+        mvg.dudy=mvg.dudy(1:end,1:end,111:end);
+        mvg.dvdy=mvg.dvdy(1:end,1:end,111:end);
+        mvg.dwdy=mvg.dwdy(1:end,1:end,111:end);
+        mvg.dudz=mvg.dudz(1:end,1:end,111:end);
+        mvg.dvdz=mvg.dvdz(1:end,1:end,111:end);
+        mvg.dwdz=mvg.dwdz(1:end,1:end,111:end);
 
+end
 S_11=mvg.dudx;
 S_12=0.5*( mvg.dudy+mvg.dvdx );
 S_13=0.5*( mvg.dudz+mvg.dwdx );
