@@ -1,2 +1,3 @@
-m=matfile('Transfer_lambda_f2D_0040000.mat')
+m=matfile('../data/velgradfield_lseQ2_j_156.mat')
+m=matfile('../data/velgradfield_lseQ4_j_156.mat')
 
