@@ -9,7 +9,7 @@ xp=lx*[0:nx-1]/nx-lx/2;
 zp=lz*[0:nz-1]/nz-lz/2;
 jcond=156;
 %lt=0.05;
-lt=13;
+lt=22;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
@@ -18,11 +18,13 @@ yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
 
 %ft =sprintf('../data/velgradfield_lseQ2_dfil_j_%03d.mat',jcond);
-ft =sprintf('../data/velgradfield_lseQ2_voz_j_%03d.mat',jcond);
+%ft =sprintf('../data/velgradfield_lseQ2_voz_j_%03d.mat',jcond);
+ft=sprintf('../data/velgradfx_voz_field_lseQ2_j_156.mat')
 
 m=matfile(ft,'Writable',true)
 %ftu=sprintf('../data/velgradfield_lseQ2_ufil_j_%03d.mat',jcond);
-ftu =sprintf('../data/velgradfield_lseQ4_voz_j_%03d.mat',jcond);
+%ftu =sprintf('../data/velgradfield_lseQ4_voz_j_%03d.mat',jcond);
+ftu=sprintf('../data/velgradfx_voz_field_lseQ4_j_156.mat')
 
 mu=matfile(ftu,'Writable',true)
 

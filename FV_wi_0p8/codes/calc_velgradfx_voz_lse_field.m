@@ -1,6 +1,6 @@
 close all
 clear
-jcond=188;
+jcond=156;
 
 nx=512;
 nz=384;
@@ -26,7 +26,7 @@ xp=lx*[0:nx-1]/nx-lx/2;
 zp=lz*[0:nz-1]/nz-lz/2;
 
 load('../data/mean_profiles.mat')
-fn=sprintf('../data/velgrad_lse_j_%03d.mat',jcond);
+fn=sprintf('../data/velgradfx_voz_lse_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
 %jcond=156
@@ -60,7 +60,7 @@ fxlse=  fftshift(fftshift(v*ml.L131   +oz*ml.L132,1),2);
 
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
-fn=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
+fn=sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ozond=oz;
 m.vcond=v;
@@ -107,7 +107,7 @@ fxlse=  fftshift(fftshift(v*ml.L131   +oz*ml.L132,1),2);
 %%
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
-fn=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+fn=sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ozcond=oz;
 m.vcond=v;
