@@ -29,6 +29,8 @@ L111=zeros(Nz,Nx,Ny/2);
 L112=zeros(Nz,Nx,Ny/2);
 L121=zeros(Nz,Nx,Ny/2);
 L122=zeros(Nz,Nx,Ny/2);
+L131=zeros(Nz,Nx,Ny/2);
+L132=zeros(Nz,Nx,Ny/2);
 
 mn=matfile('../data/transferfields_mean.mat');
 fn=sprintf('../data/voz_velgrad_corr_j_%03d.mat',jcond);
@@ -49,12 +51,12 @@ for j=1:Ny/2
 		Rvdudx(k,i,j),Rvdvdx(k,i,j),Rvdwdx(k,i,j),...
                 Rvdudy(k,i,j),Rvdvdy(k,i,j),Rvdwdy(k,i,j),...
                 Rvdudz(k,i,j),Rvdvdz(k,i,j),Rvdwdz(k,i,j),...
-		;...
+		Rvfx(k,i,j);...
                 Rozu(k,i,j),Rozv(k,i,j),Rozw(k,i,j),...
 		Rozdudx(k,i,j),Rozdvdx(k,i,j),Rozdwdx(k,i,j),...
                 Rozdudy(k,i,j),Rozdvdy(k,i,j),Rozdwdy(k,i,j),...
                 Rozdudz(k,i,j),Rozdvdz(k,i,j),Rozdwdz(k,i,j),...
-		];
+		Rozfx(k,i,j)];
             Rij=Rij.';
             L=Rij*(inv(uij));
 
@@ -82,6 +84,8 @@ L111(k,i,j)=L(11,1);
 L112(k,i,j)=L(11,2);
 L121(k,i,j)=L(12,1);
 L122(k,i,j)=L(12,2);
+L131(k,i,j)=L(13,1);
+L132(k,i,j)=L(13,2);
 
         end
     end
@@ -116,4 +120,6 @@ mf.L111=real(L111);
 mf.L112=real(L112);
 mf.L121=real(L121);
 mf.L122=real(L122);
+mf.L131=real(L131);
+mf.L132=real(L132);
 mf.j=jc;

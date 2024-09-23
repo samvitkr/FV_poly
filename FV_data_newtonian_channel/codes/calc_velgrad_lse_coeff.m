@@ -35,6 +35,9 @@ L112=zeros(Nz,Nx,Ny/2);
 L121=zeros(Nz,Nx,Ny/2);
 L122=zeros(Nz,Nx,Ny/2);
 
+L131=zeros(Nz,Nx,Ny/2);
+L132=zeros(Nz,Nx,Ny/2);
+
 fn=sprintf('../data/velgrad_corr_j_%03d.mat',jcond);
 
 %m=matfile(fn);
@@ -52,11 +55,11 @@ for j=1:Ny/2
             Rij=[Ruu(k,i,j),Ruv(k,i,j),Ruw(k,i,j),...
 	    	Rududx(k,i,j),Rudvdx(k,i,j),Rudwdx(k,i,j),...
 		Rududy(k,i,j),Rudvdy(k,i,j),Rudwdy(k,i,j),...
-		Rududz(k,i,j),Rudvdz(k,i,j),Rudwdz(k,i,j);...
+		Rududz(k,i,j),Rudvdz(k,i,j),Rudwdz(k,i,j),Rufx(k,i,j);...
                 Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j),...
 		Rvdudx(k,i,j),Rvdvdx(k,i,j),Rvdwdx(k,i,j),...
                 Rvdudy(k,i,j),Rvdvdy(k,i,j),Rvdwdy(k,i,j),...
-                Rvdudz(k,i,j),Rvdvdz(k,i,j),Rvdwdz(k,i,j)];
+                Rvdudz(k,i,j),Rvdvdz(k,i,j),Rvdwdz(k,i,j),Rvfx(k,i,j)];
                % Rwu(k,i,j),Rwv(k,i,j),Rww(k,i,j)];
             Rij=Rij.';
             L=Rij*(inv(uij));
@@ -89,6 +92,9 @@ for j=1:Ny/2
             L112(k,i,j)=L(11,2);
             L121(k,i,j)=L(12,1);
             L122(k,i,j)=L(12,2);
+
+	    L131(k,i,j)=L(13,1);
+            L132(k,i,j)=L(13,2);
 
         end
     end
@@ -129,3 +135,6 @@ mf.L111=real(L111);
 mf.L112=real(L112);
 mf.L121=real(L121);
 mf.L122=real(L122);
+
+mf.L131=real(L131);
+mf.L132=real(L132);

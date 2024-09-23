@@ -43,6 +43,8 @@ phivdudz=zeros(Nz,Nx,Ny/2);
 phivdvdz=zeros(Nz,Nx,Ny/2);
 phivdwdz=zeros(Nz,Nx,Ny/2);
 
+phiufx=zeros(Nz,Nx,Ny/2);
+phivfx=zeros(Nz,Nx,Ny/2);
 
 tstart=0000;
 tend=100000;
@@ -55,7 +57,9 @@ for time=tstart:tstep:tend
         m=matfile(fvel);
 	fvelg=sprintf("../data/velgrad_%07d.mat",time);
         mg=matfile(fvelg);
-
+	ft=sprintf("../data/transferfields_%07d.mat",time);
+        mt=matfile(ft);
+	viscF=fft2(mt.visc(:,:,Ny/2+1:end))./(Nz*Nx);
 %m=matfile('velfields_0050000.mat');
 	ufj=m.uFourier(:,:,jcond);
 	vfj=m.vFourier(:,:,jcond);
@@ -83,6 +87,7 @@ for time=tstart:tstep:tend
 	phiududz=phiududz+conj(ufj).*fft2(mg.dudz(:,:,Ny/2+1:end))./(Nx*Nz);
 	phiudvdz=phiudvdz+conj(ufj).*fft2(mg.dvdz(:,:,Ny/2+1:end))./(Nx*Nz);
 	phiudwdz=phiudwdz+conj(ufj).*fft2(mg.dwdz(:,:,Ny/2+1:end))./(Nx*Nz);	
+	phiufx=phiufx+conj(ufj).*viscF;
 
         phivdudx=phivdudx+conj(vfj).*fft2(mg.dudx(:,:,Ny/2+1:end))./(Nx*Nz);
         phivdvdx=phivdvdx+conj(vfj).*fft2(mg.dvdx(:,:,Ny/2+1:end))./(Nx*Nz);
@@ -93,6 +98,7 @@ for time=tstart:tstep:tend
         phivdudz=phivdudz+conj(vfj).*fft2(mg.dudz(:,:,Ny/2+1:end))./(Nx*Nz);
         phivdvdz=phivdvdz+conj(vfj).*fft2(mg.dvdz(:,:,Ny/2+1:end))./(Nx*Nz);
         phivdwdz=phivdwdz+conj(vfj).*fft2(mg.dwdz(:,:,Ny/2+1:end))./(Nx*Nz);
+	phivfx=phivfx+conj(vfj).*viscF;
 
 end
 
@@ -115,6 +121,7 @@ phiudwdy=phiudwdy./nf;
 phiududz=phiududz./nf;
 phiudvdz=phiudvdz./nf;
 phiudwdz=phiudwdz./nf;
+phiufx=phiufx./nf;
 
 phivdudx=phivdudx./nf;
 phivdvdx=phivdvdx./nf;
@@ -125,7 +132,7 @@ phivdwdy=phivdwdy./nf;
 phivdudz=phivdudz./nf;
 phivdvdz=phivdvdz./nf;
 phivdwdz=phivdwdz./nf;
-
+phivfx=phivfx./nf;
 
 Ruu=ifft2(phiuu*(Nz*Nx),'symmetric');
 Rvv=ifft2(phivv*(Nz*Nx),'symmetric');
@@ -157,6 +164,8 @@ Rvdudz=ifft2(phivdudz*(Nz*Nx),'symmetric');
 Rvdvdz=ifft2(phivdvdz*(Nz*Nx),'symmetric');
 Rvdwdz=ifft2(phivdwdz*(Nz*Nx),'symmetric');
 
+Rufx=ifft2(phiufx*(Nz*Nx),'symmetric');
+Rvfx=ifft2(phivfx*(Nz*Nx),'symmetric');
 
 fn=sprintf('../data/velgrad_corr_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
@@ -192,4 +201,5 @@ mf.Rvdudz=Rvdudz;
 mf.Rvdvdz=Rvdvdz;
 mf.Rvdwdz=Rvdwdz;
 
-
+mf.Rufx=Rufx;
+mf.Rvfx=Rvfx;

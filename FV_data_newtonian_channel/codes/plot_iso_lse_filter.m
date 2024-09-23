@@ -19,14 +19,13 @@ yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
 
 %ft =sprintf('../data/velgradfield_lseQ2_dfil_j_%03d.mat',jcond);
-%ft =sprintf('../data/velgradfield_lseQ2_voz_j_%03d.mat',jcond);
+%ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
 ft=sprintf('../data/velgrad_voz_field_lseQ2_j_156.mat')
-
 m=matfile(ft,'Writable',true)
-%ftu=sprintf('../data/velgradfield_lseQ2_ufil_j_%03d.mat',jcond);
-%ftu =sprintf('../data/velgradfield_lseQ4_voz_j_%03d.mat',jcond);
-ftu=sprintf('../data/velgrad_voz_field_lseQ4_j_156.mat')
 
+%ftu=sprintf('../data/velgradfield_lseQ2_ufil_j_%03d.mat',jcond);
+%ftu =sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+ftu=sprintf('../data/velgrad_voz_field_lseQ4_j_156.mat')
 mu=matfile(ftu,'Writable',true)
 
 qrmsd=rms(m.Q,[1 2]);
@@ -34,6 +33,8 @@ qrmsu=rms(mu.Q,[1 2]);
 
 nld=(m.v).*(m.dvdx-m.dudz)-(m.w).*(m.dudz-m.dwdx);
 nlu=(mu.v).*(mu.dvdx-mu.dudz)-(mu.w).*(mu.dudz-mu.dwdx);
+syzd=nld+m.fx;
+syzu=nlu+mu.fx;
 %nld=nld(:,:,111:end);
 %nlu=nlu(:,:,111:end);
 x1=150;
@@ -47,7 +48,7 @@ subplot(1,2,1)
 %permute(q,[2 1 3]), lt, permute((1e+3)*m.fxQ2,[2 1 3]))
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(m.Q,[2 1 3]), lt, permute(-nld,[2 1 3]))
+permute(m.Q,[2 1 3]), lt, permute(-syzd,[2 1 3]))
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
@@ -72,7 +73,7 @@ subplot(1,2,2)
 %permute(qu,[2 1 3]), lt, permute((1e+3)*mu.fxQ2,[2 1 3])) 
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(mu.Q,[2 1 3]), lt, permute(-nlu,[2 1 3])) 
+permute(mu.Q,[2 1 3]), lt, permute(-syzu,[2 1 3])) 
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)

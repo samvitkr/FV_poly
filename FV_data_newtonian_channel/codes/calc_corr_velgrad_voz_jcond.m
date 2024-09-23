@@ -19,6 +19,9 @@ phiozv=zeros(Nz,Nx,Ny/2);
 phivw=zeros(Nz,Nx,Ny/2);
 phiozw=zeros(Nz,Nx,Ny/2);
 
+phivfx=zeros(Nz,Nx,Ny/2);
+phiozfx=zeros(Nz,Nx,Ny/2);
+
 phivdudx=zeros(Nz,Nx,Ny/2);
 phivdvdx=zeros(Nz,Nx,Ny/2);
 phivdwdx=zeros(Nz,Nx,Ny/2);
@@ -59,7 +62,7 @@ for time=tstart:tstep:tend
 	fg=sprintf("../data/velgrad_%07d.mat",time);
         mg=matfile(fg);
 	
-%	polyxF=fft2(mt.poly(:,:,Ny/2+1:end))./(Nz*Nx);
+	viscF=fft2(mt.visc(:,:,Ny/2+1:end))./(Nz*Nx);
 	vfj=m.vFourier(:,:,jcond);
 	vfj(1,1)=0;
 	ozfj=fft2(mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond))./(Nz*Nx);
@@ -68,8 +71,8 @@ for time=tstart:tstep:tend
 	oz=mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond) - mean( mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond),'all' );
 	ozoz=ozoz+mean(oz.^2,'all');
 
-%	phivfx=phivfx+conj(vfj).*polyxF;
-%	phiozfx=phiozfx+conj(ozfj).*polyxF;
+	phivfx=phivfx+conj(vfj).*viscF;
+	phiozfx=phiozfx+conj(ozfj).*viscF;
 	phivu=phivu+conj(vfj).*m.uFourier(:,:,Ny/2+1:end);
 	phiozu=phiozu+conj(ozfj).*m.uFourier(:,:,Ny/2+1:end);
 	phivv=phivv+conj(vfj).*m.vFourier(:,:,Ny/2+1:end);
@@ -87,7 +90,7 @@ for time=tstart:tstep:tend
         phivdvdz=phivdvdz+conj(vfj).*fft2(mg.dvdz(:,:,Ny/2+1:end))./(Nx*Nz);
         phivdwdz=phivdwdz+conj(vfj).*fft2(mg.dwdz(:,:,Ny/2+1:end))./(Nx*Nz);
 
-%	phiozdudx=phiozdudx+conj(ozfj).*fft2(mg.dudx(:,:,Ny/2+1:end))./(Nx*Nz);
+	phiozdudx=phiozdudx+conj(ozfj).*fft2(mg.dudx(:,:,Ny/2+1:end))./(Nx*Nz);
         phiozdvdx=phiozdvdx+conj(ozfj).*fft2(mg.dvdx(:,:,Ny/2+1:end))./(Nx*Nz);
         phiozdwdx=phiozdwdx+conj(ozfj).*fft2(mg.dwdx(:,:,Ny/2+1:end))./(Nx*Nz);
         phiozdudy=phiozdudy+conj(ozfj).*fft2(mg.dudy(:,:,Ny/2+1:end))./(Nx*Nz);
@@ -99,8 +102,8 @@ for time=tstart:tstep:tend
 
 end
 
-%	phivfx=phivfx./nf;%+conj(vfj).*polyxF;
-%        phiozfx=phiozfx./nf;
+	phivfx=phivfx./nf;%+conj(vfj).*polyxF;
+        phiozfx=phiozfx./nf;
 
         phivu=phivu./nf;
         phiozu=phiozu./nf; %+conj(ozfj).*m.uFourier(:,:,Ny/2+1:end);
@@ -134,8 +137,8 @@ end
 	phiozdwdz=phiozdwdz./nf;
 
 
-%Rvfx=ifft2(phivfx*(Nz*Nx),'symmetric');
-%Rozfx=ifft2(phiozfx*(Nz*Nx),'symmetric');
+Rvfx=ifft2(phivfx*(Nz*Nx),'symmetric');
+Rozfx=ifft2(phiozfx*(Nz*Nx),'symmetric');
 
 Rvu=ifft2(phivu*(Nz*Nx),'symmetric');
 Rozu=ifft2(phiozu*(Nz*Nx),'symmetric');
@@ -168,8 +171,8 @@ Rozdwdz=ifft2(phiozdwdz*(Nz*Nx),'symmetric');
 
 fn=sprintf('../data/voz_velgrad_corr_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
-%mf.Rvfx=Rvfx;
-%mf.Rozfx=Rozfx;
+mf.Rvfx=Rvfx;
+mf.Rozfx=Rozfx;
 
 mf.Rvu=Rvu;
 mf.Rozu=Rozu;

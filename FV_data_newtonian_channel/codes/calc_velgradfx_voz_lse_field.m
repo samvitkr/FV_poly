@@ -25,13 +25,28 @@ lz=2*pi;
 xp=lx*[0:nx-1]/nx-lx/2;
 zp=lz*[0:nz-1]/nz-lz/2;
 
+
 load('../data/mean_profiles.mat')
+U=reshape(Um,[1 1 ny]);
+dUdy=reshape(dUdy,[1 1 ny]);
+viscm=reshape(viscm,[ 1 1 ny]);
+U=U(:,:,111:end);
+dUdy=dUdy(:,:,111:end);
+viscm=viscm(:,:,111:end);
+
 fn=sprintf('../data/velgrad_voz_lse_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
 %jcond=156
-v=0.0482;
-oz=-0.6863;
+%u=-0.115;
+%v=0.065;
+
+%jcond=188
+%u=-0.1188;
+%v=0.0647;
+
+v=0.045;
+oz=-0.54;
 
    ulse=fftshift(fftshift(v*ml.L11+  oz*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(v*ml.L21+  oz*ml.L22,1),2);...+w*ml.L23;
@@ -53,30 +68,33 @@ fxlse=  fftshift(fftshift(v*ml.L131   +oz*ml.L132,1),2);
 
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
-fn=sprintf('../data/velgrad_voz_field_lseQ2_j_%03d.mat',jcond);
+
+
+fn=sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ozond=oz;
 m.vcond=v;
-m.u=ulse;
+m.u=ulse+U;
 m.v=vlse;
 m.w=wlse;
 m.dudx=dudxlse;
 m.dvdx=dvdxlse;
 m.dwdx=dwdxlse;
-m.dudy=dudylse;
+m.dudy=dudylse+dUdy;
 m.dvdy=dvdylse;
 m.dwdy=dwdylse;
 m.dudz=dudzlse;
 m.dvdz=dvdzlse;
 m.dwdz=dwdzlse;
+m.fx=fxlse+viscm;
 m.X=X;
 m.Y=Y;
 m.Z=Z;
-m.fx=fxlse;
+
 %%
-%jcond=156
-v=-0.0514;
-oz=-0.4667;
+
+v=-0.046;
+oz=-0.37;
 
    ulse=fftshift(fftshift(v*ml.L11+  oz*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(v*ml.L21+  oz*ml.L22,1),2);...+w*ml.L23;
@@ -99,27 +117,23 @@ fxlse=  fftshift(fftshift(v*ml.L131   +oz*ml.L132,1),2);
 %%
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
-fn=sprintf('../data/velgrad_voz_field_lseQ4_j_%03d.mat',jcond);
+fn=sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ozcond=oz;
 m.vcond=v;
-m.u=ulse;
+m.u=ulse+U;
 m.v=vlse;
 m.w=wlse;
 m.dudx=dudxlse;
 m.dvdx=dvdxlse;
 m.dwdx=dwdxlse;
-m.dudy=dudylse;
+m.dudy=dudylse+dUdy;
 m.dvdy=dvdylse;
 m.dwdy=dwdylse;
 m.dudz=dudzlse;
 m.dvdz=dvdzlse;
 m.dwdz=dwdzlse;
+m.fx=fxlse+viscm;
 m.X=X;
 m.Y=Y;
 m.Z=Z;
-m.fx=fxlse;
-%m.fxQ2=fxQ2;
-%m.fxQ4=fxQ4;
-
-
