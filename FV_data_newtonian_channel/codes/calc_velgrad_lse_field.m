@@ -17,21 +17,22 @@ zp=lz*[0:nz-1]/nz-lz/2;
 
 load('../data/mean_profiles.mat')
 
-U=reshape(Um,[1 1 ny]);
-dUdy=reshape(dUdy,[1 1 ny]);
-viscm=reshape(viscm,[ 1 1 ny]);
-U=U(:,:,111:end);
-dUdy=dUdy(:,:,111:end);
-viscm=viscm(:,:,111:end);
+%U=reshape(Um,[1 1 ny]);
+%dUdy=reshape(dUdy,[1 1 ny]);
+%viscm=reshape(viscm,[ 1 1 ny]);
+%U=U(:,:,111:end);
+%dUdy=dUdy(:,:,111:end);
+%viscm=viscm(:,:,111:end);
 
-
+fp=sprintf('../data/jointpdf_uv_j_%03d.mat',jcond);
+mp=matfile(fp);
 
 fn=sprintf('../data/velgrad_lse_j_%03d.mat',jcond);
 ml=matfile(fn);
 %%
-%jcond=156
-u=-0.1141;
-v=0.0671;
+
+u=mp.u2;
+v=mp.v2;
 
    ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
@@ -57,13 +58,13 @@ fn=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ucond=u;
 m.vcond=v;
-m.u=ulse+U;
+m.u=ulse;
 m.v=vlse;
 m.w=wlse;
 m.dudx=dudxlse;
 m.dvdx=dvdxlse;
 m.dwdx=dwdxlse;
-m.dudy=dudylse+dUdy;
+m.dudy=dudylse;
 m.dvdy=dvdylse;
 m.dwdy=dwdylse;
 m.dudz=dudzlse;
@@ -72,12 +73,12 @@ m.dwdz=dwdzlse;
 m.X=X;
 m.Y=Y;
 m.Z=Z;
-m.fx=fxlse+viscm;
+m.fx=fxlse;
 
 %%
-jcond=156;
-u=0.0976;	
-v=-0.0576;
+
+u=mp.u4;	
+v=mp.v4;
 
    ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
@@ -105,13 +106,13 @@ fn=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ucond=u;
 m.vcond=v;
-m.u=ulse+U;
+m.u=ulse;
 m.v=vlse;
 m.w=wlse;
 m.dudx=dudxlse;
 m.dvdx=dvdxlse;
 m.dwdx=dwdxlse;
-m.dudy=dudylse+dUdy;
+m.dudy=dudylse;
 m.dvdy=dvdylse;
 m.dwdy=dwdylse;
 m.dudz=dudzlse;
@@ -120,6 +121,6 @@ m.dwdz=dwdzlse;
 m.X=X;
 m.Y=Y;
 m.Z=Z;
-m.fx=fxlse+viscm;
+m.fx=fxlse;
 
 

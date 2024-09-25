@@ -17,9 +17,11 @@ dkz=kz(2)-kz(1);
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
 load('../data/ygrid.mat')
-ft =sprintf('../data/velgradfield_lseQ2_voz_j_%03d.mat',jcond);
+%ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
+ft =sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
 m2=matfile(ft)
-ftu=sprintf('../data/velgradfield_lseQ4_voz_j_%03d.mat',jcond);
+%ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+ftu =sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
 m4=matfile(ftu)
 
 

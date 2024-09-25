@@ -13,7 +13,7 @@ O_13	=single(zeros(Nz,Nx,Ny/2));
 O_32	=single(zeros(Nz,Nx,Ny/2));
 lambda2	=single(zeros(Nz,Nx,Ny/2));
 Q	=single(zeros(Nz,Nx,Ny/2));
-fvg=sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
+fvg=sprintf('../data/velgradfield_ufil_lseQ4_j_%03d.mat',jcond);
 mvg=matfile(fvg,'Writable',true)
 fl=size(mvg.dudy);
 if(fl(3)>Ny/2)
