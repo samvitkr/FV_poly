@@ -3,7 +3,7 @@ clear
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=145;
 jc=jcond-Ny/2;
 Lx=  4*pi;
 Lz = 2*pi;
@@ -17,11 +17,11 @@ dkz=kz(2)-kz(1);
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
 load('../data/ygrid.mat')
-%ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
-ft =sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
+ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
+%ft =sprintf('../data/velgradfx_voz_field_lseQ2_j_%03d.mat',jcond);
 m2=matfile(ft)
-%ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
-ftu =sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
+ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+%ftu =sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
 m4=matfile(ftu)
 
 
@@ -45,7 +45,7 @@ pscm=psc1+psc2+psc3+psc4;
 phinl4=real(pscm(1:Nz/2,1:Nx/2,:));
 
 
-fpu=sprintf('../data/velgrad_lse_voz_spec_j_%03d.mat',jcond);
+fpu=sprintf('../data/velgrad_lse_spec_j_%03d.mat',jcond);
 mpu=matfile(fpu,'Writable',true)
 mpu.phinl2=phinl2;
 mpu.phinl4=phinl4;

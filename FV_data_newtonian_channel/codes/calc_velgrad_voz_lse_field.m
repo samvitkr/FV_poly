@@ -75,8 +75,8 @@ m.Z=Z;
 m.fx=fxlse;
 %%
 %jcond=156
-v=-0.0514;
-oz=-0.4667;
+v=-0.0506;
+oz=0.7412;
 
    ulse=fftshift(fftshift(v*ml.L11+  oz*ml.L12,1),2);...+w*ml.L13;
    vlse=fftshift(fftshift(v*ml.L21+  oz*ml.L22,1),2);...+w*ml.L23;
@@ -99,7 +99,7 @@ fxlse=  fftshift(fftshift(v*ml.L131   +oz*ml.L132,1),2);
 %%
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
-fn=sprintf('../data/velgrad_voz_field_lseQ4_j_%03d.mat',jcond);
+fn=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
 m=matfile(fn,'Writable',true);
 m.ozcond=oz;
 m.vcond=v;

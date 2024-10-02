@@ -11,10 +11,11 @@ nf=(tend-tstart)/tstep+1;
 nbin=256;
 vmin=-0.1;
 vmax=0.1;
-ozmin=-7;
-ozmax=7;
+ozmin=-3;
+ozmax=3;
 density=zeros(nbin,nbin);
-
+mp=matfile('../data/mean_profiles.mat');
+ozm=-mp.dUdy(jcond,1);
 %load('lambda_stats.mat')
 for time=tstart:tstep:tend
         time
@@ -24,7 +25,7 @@ for time=tstart:tstep:tend
             mg=matfile(fvg);
 
 	oz=mg.dvdx(:,:,jcond)-mg.dudy(:,:,jcond);
-	oz=oz-mean(oz,'all');
+	oz=oz-ozm;
 	
         ozl=reshape( oz ,Nx*Nz,1 );
         vl=reshape( m.vfield(:,:,jcond) ,Nx*Nz,1 );

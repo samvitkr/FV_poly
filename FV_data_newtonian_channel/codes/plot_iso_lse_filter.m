@@ -18,12 +18,13 @@ load('../data/ygrid.mat')
 yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
 
-ft =sprintf('../data/velgradfield_dfil_lseQ4_j_%03d.mat',jcond);
+%ft =sprintf('../data/velgradfield_dfil_lseQ2_j_%03d.mat',jcond);
 %ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
-%ft=sprintf('../data/velgrad_voz_field_lseQ2_j_156.mat')
+ft=sprintf('../data/velgrad_voz_field_lseQ2_j_156.mat')
 m=matfile(ft,'Writable',true)
 
-ftu=sprintf('../data/velgradfield_ufil_lseQ4_j_%03d.mat',jcond);
+%ftu=sprintf('../data/velgradfield_ufil_lseQ2_j_%03d.mat',jcond);
+ftu=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
 %ftu =sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
 %ftu=sprintf('../data/velgrad_voz_field_lseQ4_j_156.mat')
 mu=matfile(ftu,'Writable',true)
@@ -94,8 +95,8 @@ zlabel('y')
 grid on
 
 
-% f1=sprintf("iso_lse_vel_nl_Q5e-3_filter_j2_%03d.fig",jcond)
-% saveas(h1,f1)
+ f1=sprintf("iso_lse_q2q4oz_%03d.fig",jcond)
+ saveas(h1,f1)
 % fl=sprintf("lse_profiles_j_%03d.mat",jcond)
 % mfl=matfile(fl,'Writable',true)
 % mfl.lt=lt;
