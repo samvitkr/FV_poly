@@ -3,7 +3,7 @@ clear
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=145;
+jcond=156;
 jc=jcond-Ny/2;
 Lx=  4*pi;
 Lz = 2*pi;
@@ -23,10 +23,11 @@ m2=matfile(ft)
 ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
 %ftu =sprintf('../data/velgradfx_voz_field_lseQ4_j_%03d.mat',jcond);
 m4=matfile(ftu)
+mm=matfile('../data/mean_profiles.mat');
+dUdy=reshape(mm.dUdy(111:end,1),[1 1 Ny/2]);
 
-
-nl2F=conj(fft2(m2.v)).*fft2(m2.dvdx-m2.dudz)-conj(fft2(m2.w)).*fft2(m2.dudz-m2.dwdx);
-nl4F=conj(fft2(m4.v)).*fft2(m4.dvdx-m4.dudz)-conj(fft2(m4.w)).*fft2(m4.dudz-m4.dwdx);
+nl2F=conj(fft2(m2.v)).*fft2(m2.dvdx-m2.dudy-dUdy)-conj(fft2(m2.w)).*fft2(m2.dudz-m2.dwdx);
+nl4F=conj(fft2(m4.v)).*fft2(m4.dvdx-m4.dudy-dUdy)-conj(fft2(m4.w)).*fft2(m4.dudz-m4.dwdx);
 nl2F=nl2F./(Nx^2*Nz^2);
 nl4F=nl4F./(Nx^2*Nz^2);
 
