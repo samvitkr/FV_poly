@@ -3,7 +3,7 @@ clear
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=156;
+jcond=145;
 jc=jcond-Ny/2;
 Lx=  4*pi;
 Lz = 2*pi;

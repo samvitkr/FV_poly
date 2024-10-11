@@ -13,7 +13,7 @@ kz = 2*(pi/Lz)*[0:Nz/2-1, 0, -Nz/2+1:-1];
 dkx=kx(2)-kx(1);
 dkz=kz(2)-kz(1);
 [Kx,Kz]=meshgrid(kx(1:Nx/2),kz(1:Nz/2));
-m=matfile('transferfields_mean.mat')
+m=matfile('../data/transferfields_mean.mat')
 
 convF=m.vozF-m.woyF;
 psc1=convF;
@@ -47,8 +47,8 @@ phiwoy=0.5*(phiwoy+flip(phiwoy,3));
 m2=matfile('spec2d.mat','Writable',true)
 m2.Kx=Kx;
 m2.Kz=Kz;
-m2.phiconv=phiconv(:,:,1:Ny/2);
-m2.phivoz=phivoz(:,:,1:Ny/2);
-m2.phiwoy=phiwoy(:,:,1:Ny/2);
+m2.phiconv=phiconv(:,:,1:Ny);
+m2.phivoz=phivoz(:,:,1:Ny);
+m2.phiwoy=phiwoy(:,:,1:Ny);
 
 

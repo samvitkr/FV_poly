@@ -36,23 +36,23 @@ ml=matfile(fn);
 u=mp.u2;
 v=mp.v2;
 
-   ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2)+U;...+w*ml.L13;
-   vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
-   wlse=fftshift(fftshift(u*ml.L31+  v*ml.L32,1),2);...+w*ml.L33;
+   ulse=fftshift(fftshift(v*ml.L11+  oz*ml.L12,1),2)+U;...+w*ml.L13;
+   vlse=fftshift(fftshift(v*ml.L21+  oz*ml.L22,1),2);...+w*ml.L23;
+   wlse=fftshift(fftshift(v*ml.L31+  oz*ml.L32,1),2);...+w*ml.L33;
 
-dudxlse=fftshift(fftshift(u*ml.L41+  v*ml.L42,1),2);
-dvdxlse=fftshift(fftshift(u*ml.L51+  v*ml.L52,1),2);
-dwdxlse=fftshift(fftshift(u*ml.L61+  v*ml.L62,1),2);
+dudxlse=fftshift(fftshift(v*ml.L41+  oz*ml.L42,1),2);
+dvdxlse=fftshift(fftshift(v*ml.L51+  oz*ml.L52,1),2);
+dwdxlse=fftshift(fftshift(v*ml.L61+  oz*ml.L62,1),2);
 
-dudylse=fftshift(fftshift(u*ml.L71+  v*ml.L72,1),2)+dUdy;
-dvdylse=fftshift(fftshift(u*ml.L81+  v*ml.L82,1),2);
-dwdylse=fftshift(fftshift(u*ml.L91+  v*ml.L92,1),2);
+dudylse=fftshift(fftshift(v*ml.L71+  oz*ml.L72,1),2)+dUdy;
+dvdylse=fftshift(fftshift(v*ml.L81+  oz*ml.L82,1),2);
+dwdylse=fftshift(fftshift(v*ml.L91+  oz*ml.L92,1),2);
 
-dudzlse=fftshift(fftshift(u*ml.L101+v*ml.L102,1),2);
-dvdzlse=fftshift(fftshift(u*ml.L111+v*ml.L112,1),2);
-dwdzlse=fftshift(fftshift(u*ml.L121+v*ml.L122,1),2);
+dudzlse=fftshift(fftshift(v*ml.L101+ oz*ml.L102,1),2);
+dvdzlse=fftshift(fftshift(v*ml.L111+ oz*ml.L112,1),2);
+dwdzlse=fftshift(fftshift(v*ml.L121+ oz*ml.L122,1),2);
 
-fxlse=fftshift(fftshift(u*ml.L131+v*ml.L132,1),2)+viscm;
+fxlse=fftshift(fftshift(  v*ml.L131+ oz*ml.L132,1),2)+viscm;
 
 yp=yCheb+1;
 [X,Z,Y]=meshgrid(xp,zp,yp(ny/2+1:end));
@@ -102,25 +102,23 @@ mu.fx=ifft2(fft2(fxlse).*mf.ufil,'symmetric');
 %%
 u=mp.u4;	
 v=mp.v4;
+   ulse=fftshift(fftshift(v*ml.L11+  oz*ml.L12,1),2)+U;...+w*ml.L13;
+   vlse=fftshift(fftshift(v*ml.L21+  oz*ml.L22,1),2);...+w*ml.L23;
+   wlse=fftshift(fftshift(v*ml.L31+  oz*ml.L32,1),2);...+w*ml.L33;
 
-   ulse=fftshift(fftshift(u*ml.L11+  v*ml.L12,1),2)+U;...+w*ml.L13;
-   vlse=fftshift(fftshift(u*ml.L21+  v*ml.L22,1),2);...+w*ml.L23;
-   wlse=fftshift(fftshift(u*ml.L31+  v*ml.L32,1),2);...+w*ml.L33;
+dudxlse=fftshift(fftshift(v*ml.L41+  oz*ml.L42,1),2);
+dvdxlse=fftshift(fftshift(v*ml.L51+  oz*ml.L52,1),2);
+dwdxlse=fftshift(fftshift(v*ml.L61+  oz*ml.L62,1),2);
 
-dudxlse=fftshift(fftshift(u*ml.L41+  v*ml.L42,1),2);
-dvdxlse=fftshift(fftshift(u*ml.L51+  v*ml.L52,1),2);
-dwdxlse=fftshift(fftshift(u*ml.L61+  v*ml.L62,1),2);
+dudylse=fftshift(fftshift(v*ml.L71+  oz*ml.L72,1),2)+dUdy;
+dvdylse=fftshift(fftshift(v*ml.L81+  oz*ml.L82,1),2);
+dwdylse=fftshift(fftshift(v*ml.L91+  oz*ml.L92,1),2);
 
-dudylse=fftshift(fftshift(u*ml.L71+  v*ml.L72,1),2)+dUdy;
-dvdylse=fftshift(fftshift(u*ml.L81+  v*ml.L82,1),2);
-dwdylse=fftshift(fftshift(u*ml.L91+  v*ml.L92,1),2);
+dudzlse=fftshift(fftshift(v*ml.L101+ oz*ml.L102,1),2);
+dvdzlse=fftshift(fftshift(v*ml.L111+ oz*ml.L112,1),2);
+dwdzlse=fftshift(fftshift(v*ml.L121+ oz*ml.L122,1),2);
 
-dudzlse=fftshift(fftshift(u*ml.L101+v*ml.L102,1),2);
-dvdzlse=fftshift(fftshift(u*ml.L111+v*ml.L112,1),2);
-dwdzlse=fftshift(fftshift(u*ml.L121+v*ml.L122,1),2);
-
-fxlse=fftshift(fftshift(u*ml.L131+v*ml.L132,1),2)+viscm;
-
+fxlse=fftshift(fftshift(  v*ml.L131+ oz*ml.L132,1),2)+viscm;
 
 %%
 yp=yCheb+1;

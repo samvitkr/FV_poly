@@ -9,8 +9,8 @@ xp=lx*[0:nx-1]/nx-lx/2;
 zp=lz*[0:nz-1]/nz-lz/2;
 jcond=156;
 %lt=0.05;
-%lt=0.22;
-lt=-0.01;
+%lt=0.22;vim ca
+lt=-0.005;
 %fth=0.1;
 %ft=sprintf("velfield_lse_voz_j_%d.mat",jcond)
 %ft=sprintf("velfield_lse_vwoy_j_%d.mat",jcond)
@@ -21,22 +21,22 @@ dUdy=dUdy(1,1,111:end);
 yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
 
-%ft =sprintf('../data/velgradfield_dfil_lseQ2_j_%03d.mat',jcond);
-%ft =sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond);
-ft=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond')
+%ft =sprintf('../data/velgradfield_dfil_lseQ4_j_%03d.mat',jcond);
+ft =sprintf('../data/velgradfield_lsevp_j_%03d.mat',jcond);
+%ft=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond')
 m=matfile(ft,'Writable',true)
 
-%ftu=sprintf('../data/velgradfield_ufil_lseQ2_j_%03d.mat',jcond);
-ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
-%ftu =sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+%ftu=sprintf('../data/velgradfield_ufil_lseQ4_j_%03d.mat',jcond);
+%ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
+ftu =sprintf('../data/velgradfield_lsevn_j_%03d.mat',jcond);
 %ftu=sprintf('../data/velgrad_voz_field_lseQ4_j_156.mat')
 mu=matfile(ftu,'Writable',true)
 
-qrmsd=rms(m.Q,[1 2]);
-qrmsu=rms(mu.Q,[1 2]);
+%qrmsd=rms(m.Q,[1 2]);
+%qrmsu=rms(mu.Q,[1 2]);
 
-nld=(m.v).*(m.dvdx-m.dudy-dUdy)-(m.w).*(m.dudz-m.dwdx);
-nlu=(mu.v).*(mu.dvdx-mu.dudy-dUdy)-(mu.w).*(mu.dudz-mu.dwdx);
+nld=(m.v).*(m.dvdx-m.dudy)-(m.w).*(m.dudz-m.dwdx);
+nlu=(mu.v).*(mu.dvdx-mu.dudy)-(mu.w).*(mu.dudz-mu.dwdx);
 syzd=nld+m.fx;
 syzu=nlu+mu.fx;
 %nld=nld(:,:,111:end);
@@ -52,7 +52,7 @@ subplot(1,2,1)
 %permute(q,[2 1 3]), lt, permute((1e+3)*m.fxQ2,[2 1 3]))
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(m.lambda2,[2 1 3]), lt, permute(m.v,[2 1 3]))
+permute(m.lambda2tot,[2 1 3]), lt, permute(m.v,[2 1 3]))
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fxQ2,[2 1 3]), -fth)
@@ -77,7 +77,7 @@ subplot(1,2,2)
 %permute(qu,[2 1 3]), lt, permute((1e+3)*mu.fxQ2,[2 1 3])) 
 
 isosurface( permute(Z,[2 1 3]), permute(X,[2 1 3]), permute(Y,[2 1 3]),...
-permute(mu.lambda2,[2 1 3]), lt, permute(mu.v,[2 1 3])) 
+permute(mu.lambda2tot,[2 1 3]), lt, permute(mu.v,[2 1 3])) 
 
 %isosurface( permute(m.Z,[2 1 3]), permute(m.X,[2 1 3]), permute(m.Y,[2 1 3]),...
 %permute((1e+3)*m.fyQ2,[2 1 3]), -fth)
@@ -98,6 +98,6 @@ zlabel('y')
 grid on
 
 
- f1=sprintf("iso_l2_q2q4_%03d.fig",jcond)
- %f1=sprintf("iso_l2_q2q4_%03d.fig",jcond)
+ %f1=sprintf("iso_l2tot_q2q4_%03d.fig",jcond)
+ f1=sprintf("iso_l2tot_vpn_%03d.fig",jcond)
  saveas(h1,f1)

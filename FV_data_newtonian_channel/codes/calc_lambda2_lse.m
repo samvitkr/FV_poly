@@ -1,20 +1,20 @@
 Nx=512;
 Ny=220;
 Nz=384;
-jcond=156;
+jcond=145;
 fvgd2=sprintf("../data/velgradfield_dfil_lseQ2_j_%03d.mat",jcond);
 fvgu2=sprintf("../data/velgradfield_ufil_lseQ2_j_%03d.mat",jcond);
 fvgd4=sprintf("../data/velgradfield_dfil_lseQ4_j_%03d.mat",jcond);
 fvgu4=sprintf("../data/velgradfield_ufil_lseQ4_j_%03d.mat",jcond);
 fvgn=[fvgd2; fvgu2; fvgd4; fvgu4];
-fvg2=sprintf("../data/velgradfield_lseQ2_j_%03d.mat",jcond);
-fvg4=sprintf("../data/velgradfield_lseQ4_j_%03d.mat",jcond);
+fvg2=sprintf("../data/velgradfield_lsevp_j_%03d.mat",jcond);
+fvg4=sprintf("../data/velgradfield_lsevn_j_%03d.mat",jcond);
 fvgq=[fvg2 fvg4];
 fvgoz=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
 mm=matfile('../data/mean_profile.mat')
-for nn=1:1
-fvg=fvgoz;
-%fvg=fvgn(nn);	
+for nn=1:2
+%fvg=fvgoz;
+fvg=fvgq(nn);	
 mvg=matfile(fvg,'Writable',true)
 
 
