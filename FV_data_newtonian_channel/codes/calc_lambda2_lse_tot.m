@@ -1,7 +1,7 @@
 Nx=512;
 Ny=220;
 Nz=384;
-jcond=145;
+jcond=194;
 fvgd2=sprintf("../data/velgradfield_dfil_lseQ2_j_%03d.mat",jcond);
 fvgu2=sprintf("../data/velgradfield_ufil_lseQ2_j_%03d.mat",jcond);
 fvgd4=sprintf("../data/velgradfield_dfil_lseQ4_j_%03d.mat",jcond);

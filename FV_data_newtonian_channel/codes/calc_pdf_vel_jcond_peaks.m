@@ -1,6 +1,6 @@
 clear
 close all
-jcond=145;
+jcond=194;
 fn=sprintf('../data/jointpdf_uv_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true)
 load(fn)

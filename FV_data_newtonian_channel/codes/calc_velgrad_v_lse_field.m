@@ -1,6 +1,6 @@
 close all
 clear
-jcond=145;
+jcond=194;
 
 nx=512;
 nz=384;

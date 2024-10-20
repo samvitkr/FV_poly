@@ -1,6 +1,6 @@
 close all
 clear
-jcond=145;
+jcond=194;
 ltq=22;
 lt=-0.005;
 ny=220;

@@ -3,16 +3,16 @@ close all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=184;
+jcond=194;
 tstart=0000;
 tend=100000;
 tstep=1000;
 nf=(tend-tstart)/tstep+1;
 nbin=256;
-umin=-0.5;
-umax=0.5;
-vmin=-0.5;
-vmax=0.5;
+umin=-0.25;
+umax=0.25;
+vmin=-0.25;
+vmax=0.25;
 density=zeros(nbin,nbin);
 
 %load('lambda_stats.mat')

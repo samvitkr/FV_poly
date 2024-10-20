@@ -3,7 +3,7 @@ clc
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=145;
+jcond=194;
 L11=zeros(Nz,Nx,Ny/2);
 L12=zeros(Nz,Nx,Ny/2);
 %L13=zeros(Nz,Nx,Ny/2);
