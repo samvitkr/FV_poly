@@ -1,7 +1,7 @@
 Nx=512;
 Ny=220;
 Nz=384;
-jcond=194;
+jcond=156;
 fvgd2=sprintf("../data/velgradfield_dfil_lseQ2_j_%03d.mat",jcond);
 fvgu2=sprintf("../data/velgradfield_ufil_lseQ2_j_%03d.mat",jcond);
 fvgd4=sprintf("../data/velgradfield_dfil_lseQ4_j_%03d.mat",jcond);
@@ -11,12 +11,18 @@ fvg2=sprintf("../data/velgradfield_lsevp_j_%03d.mat",jcond);
 fvg4=sprintf("../data/velgradfield_lsevn_j_%03d.mat",jcond);
 fvgq=[fvg2 fvg4];
 fvgoz=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
+
+mf=matfile('../data/filter.mat');
+dfilm=mf.dfil(1,1,1:end);
+ufilm=mf.ufil(1,1,1:end);
+film=[dfilm ; ufilm; dfilm; ufilm;];
 mm=matfile('../data/mean_profiles.mat')
 dUdy=reshape(mm.dUdy,[1 1 Ny]);
 dUdy=dUdy(1,1,111:end);
-for nn=1:2
+for nn=1:4
 %fvg=fvgoz;
-fvg=fvgq(nn);	
+fvg=fvgn(nn);	
+fil=film(nn,1,:);
 mvg=matfile(fvg,'Writable',true)
 
 
@@ -49,13 +55,13 @@ if(fl(3)>Ny/2)
 end
 
 S_11=mvg.dudx;
-S_12=0.5*( mvg.dudy+mvg.dvdx+dUdy );
+S_12=0.5*( mvg.dudy+mvg.dvdx+dUdy.*fil );
 S_13=0.5*( mvg.dudz+mvg.dwdx );
 S_22=mvg.dvdy;
 S_23=0.5*( mvg.dwdy+mvg.dvdz );
 S_33=mvg.dwdz;
 
-omegaZ=mvg.dvdx-mvg.dudy-dUdy;
+omegaZ=mvg.dvdx-mvg.dudy-dUdy.*fil;
 omegaY=mvg.dudz-mvg.dwdx;
 omegaX=mvg.dwdy-mvg.dvdz;
 O_21 = 0.5*omegaZ(:,:,:);
