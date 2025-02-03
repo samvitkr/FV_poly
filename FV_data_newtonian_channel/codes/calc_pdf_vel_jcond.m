@@ -3,7 +3,7 @@ close all
 Nx=512;
 Nz=384;
 Ny=220;
-jcond=194;
+jcond=171
 tstart=0000;
 tend=100000;
 tstep=1000;

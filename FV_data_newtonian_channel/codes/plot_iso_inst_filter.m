@@ -27,12 +27,12 @@ dUdy=dUdy(1,1,111:end);
 yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
 
-ft =sprintf('../data/velgrad_transfer_fhp_%07d.mat',time);
+ft =sprintf('../data/velgrad_transfer_dfil_%07d.mat',time);
 %ft =sprintf('../data/velgradfield_lsevp_j_%03d.mat',jcond);
 %ft=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond')
 m=matfile(ft,'Writable',true)
 
-ftu =sprintf('../data/velgrad_transfer_flp_%07d.mat',time);
+ftu =sprintf('../data/velgrad_transfer_ufil_%07d.mat',time);
 %ftu=sprintf('../data/velgradfield_lseQ4_j_%03d.mat',jcond);
 %ftu =sprintf('../data/velgradfield_lsevn_j_%03d.mat',jcond);
 %ftu=sprintf('../data/velgrad_voz_field_lseQ4_j_156.mat')

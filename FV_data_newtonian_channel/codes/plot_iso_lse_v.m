@@ -7,7 +7,7 @@ lx=4*pi;
 lz=2*pi;
 xp=lx*[0:nx-1]/nx-lx/2;
 zp=lz*[0:nz-1]/nz-lz/2;
-jcond=194;
+jcond=205;
 jc=jcond-110;
 %lt=0.05;
 %lt=0.22;vim ca
@@ -21,7 +21,7 @@ dUdy=reshape(mm.dUdy,[1,1,ny]);
 dUdy=dUdy(1,1,111:end);
 yp=yCheb(111:end)'+1;
 [X,Z,Y]=meshgrid(xp,zp,yp);
-lt=-0.05*dUdy(jc)^2;
+lt=-0.005;
 %ft =sprintf('../data/velgradfield_dfil_lseQ4_j_%03d.mat',jcond);
 ft =sprintf('../data/velgradfield_lsevp_j_%03d.mat',jcond);
 %ft=sprintf('../data/velgradfield_lseQ2_j_%03d.mat',jcond')
@@ -89,9 +89,9 @@ colormap jet
 colorbar
 lightangle(-45,-90)
 axis equal
-% ylim([-1 1])
-% xlim([-0.5 0.5])
-% zlim([0 0.4])
+ ylim([-1 1])
+ xlim([-0.5 0.5])
+ zlim([0 0.4])
 view(45,45)
 xlabel('z')
 ylabel('x')

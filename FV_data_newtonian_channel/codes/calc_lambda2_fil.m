@@ -20,8 +20,11 @@ Q	=single(zeros(Nz,Nx,Ny));
 
 
 for time=tstart:tstep:tend
-fvgd=sprintf("../data/velgrad_transfer_fhp_%07d.mat",time);
-fvgu=sprintf("../data/velgrad_transfer_flp_%07d.mat",time);
+%fvgd=sprintf("../data/velgrad_transfer_fhp_%07d.mat",time);
+%fvgu=sprintf("../data/velgrad_transfer_flp_%07d.mat",time);
+
+fvgd=sprintf("../data/velgrad_transfer_dfil_%07d.mat",time);
+fvgu=sprintf("../data/velgrad_transfer_ufil_%07d.mat",time);
 fvgq=[fvgd fvgu];
 for ii=1:1
 	fvg=fvgq(ii);
