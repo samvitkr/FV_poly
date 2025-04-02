@@ -1,4 +1,4 @@
-%m=matfile('../data/velgradfield_lseQ2_j_156.mat')
+m=matfile('../data/transferfields_0107000.mat')
 %m=matfile('../data/velgradfield_lseQ4_j_156.mat')
 %fpu=sprintf('../data/velgradfield_lseQ4_j_156.mat');
 %mpu=matfile(fpu,'Writable',true)
@@ -9,8 +9,8 @@
 %mu=matfile(fnu,'Writable',true)
 %ft=sprintf('../data/velfield_lse_voz_j_188.mat')
 %mt=matfile(ft)
-ft=sprintf('../data/velgradfx_voz_field_lseQ2_j_156.mat')
-m2=matfile(ft)
-ft=sprintf('../data/velgradfx_voz_field_lseQ4_j_156.mat')
-m4=matfile(ft)
+%ft=sprintf('../data/velgradfx_voz_field_lseQ2_j_156.mat')
+%m2=matfile(ft)
+%ft=sprintf('../data/velgradfx_voz_field_lseQ4_j_156.mat')
+%m4=matfile(ft)
 %md=matfile('../data/velgrad_transfer_ddfilter_0040000.mat')
