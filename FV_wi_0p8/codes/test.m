@@ -1,4 +1,9 @@
-m=matfile('../data/transferfields_0107000.mat')
+jcond=188;
+%fn=sprintf('../data/vel_corr_reflect_j_%03d.mat',jcond);
+%mf=matfile(fn,"Writable",true)
+fn=sprintf('../data/mean_profiles.mat')
+mf=matfile(fn)
+%m=matfile('../data/transferfields_0107000.mat')
 %m=matfile('../data/velgradfield_lseQ4_j_156.mat')
 %fpu=sprintf('../data/velgradfield_lseQ4_j_156.mat');
 %mpu=matfile(fpu,'Writable',true)

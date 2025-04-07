@@ -28,7 +28,6 @@ phivdwdz=zeros(Nz,Nx,Ny/2);
 phivfx=zeros(Nz,Nx,Ny/2);
 phivfy=zeros(Nz,Nx,Ny/2);
 phivfz=zeros(Nz,Nx,Ny/2);
-
 phivvoz=zeros(Nz,Nx,Ny/2);
 phivwoy=zeros(Nz,Nx,Ny/2);
 
