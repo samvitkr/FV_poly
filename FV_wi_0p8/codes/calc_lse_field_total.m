@@ -1,6 +1,6 @@
 clear
 Ny=220;
-jcond=188;
+jcond=156;
 jc=Ny-jcond+1;
 
 mp=matfile('../data/mean_profiles.mat')
@@ -18,12 +18,23 @@ dUdy=reshape(dUdy,[1 1 Ny/2]);
 
 clear mp
 
-fn=sprintf('../data/lse_v_field_j_%03d.mat',jcond)
-m=matfile(fn,'Writable',true);
+%fn=sprintf('../data/lse_v_field_j_%03d.mat',jcond)
+%m=matfile(fn,'Writable',true)
 
-fnp=sprintf('../data/lsevp_field_tot_j_%03d.mat',jcond)
+%fnp=sprintf('../data/lsevp_field_tot_j_%03d.mat',jcond)
+%mp=matfile(fnp,'Writable',true);
+
+%fn=sprintf('../data/lse_v_field_F_j_%03d.mat',jcond)
+%m=matfile(fn,'Writable',true)
+
+%fnp=sprintf('../data/lsevp_field_tot_F_j_%03d.mat',jcond)
+%mp=matfile(fnp,'Writable',true);
+
+fn=sprintf('../data/lse_v_field_B_j_%03d.mat',jcond)
+m=matfile(fn,'Writable',true)
+
+fnp=sprintf('../data/lsevp_field_tot_B_j_%03d.mat',jcond)
 mp=matfile(fnp,'Writable',true);
-
 mp.u=U+	m.ulse;
 mp.v=	m.vlse;
 mp.w=	m.wlse;
@@ -49,10 +60,15 @@ mp.fz=		m.fzlse;
 
 clear mp
 
-fnn=sprintf('../data/lsevn_field_tot_j_%03d.mat',jcond)
+%fnn=sprintf('../data/lsevn_field_tot_j_%03d.mat',jcond)
+%mn=matfile(fnn,'Writable',true);
+
+
+%fnn=sprintf('../data/lsevn_field_tot_F_j_%03d.mat',jcond)
+%mn=matfile(fnn,'Writable',true);
+
+fnn=sprintf('../data/lsevn_field_tot_B_j_%03d.mat',jcond)
 mn=matfile(fnn,'Writable',true);
-mn.x=x;
-mn.z=z;
 
 mn.u=U- m.ulse;
 mn.v= - m.vlse;

@@ -34,18 +34,21 @@ phivwoy=zeros(Nz,Nx,Ny/2);
 tstart=10000;
 tend=108000;
 tstep=1000;
-nf=2*((tend-tstart)/tstep+1);
+nf=2*((tend-tstart-tstep)/tstep+1);
 %load('lambda_stats.mat')
-for time=tstart:tstep:tend
+for time=tstart+tstep:tstep:tend
         time
 
-        fvel=sprintf("../data/velfields_%07d.mat",time);
+        fvel=sprintf("../data/velfields_%07d.mat",time-tstep);
         m=matfile(fvel);
 	vfj=m.vFourier(:,:,jcond);
         vfj(1,1)=0;
         vfjt=m.vFourier(:,:,jc);
         vfjt(1,1)=0;
+	clear m
 
+	fvel=sprintf("../data/velfields_%07d.mat",time);
+        m=matfile(fvel);
         phivu=phivu+conj(vfj).*m.uFourier(:,:,Ny/2+1:end)-flip(conj(vfjt).*m.uFourier(:,:,1:Ny/2),3);
         phivv=phivv+conj(vfj).*m.vFourier(:,:,Ny/2+1:end)+flip(conj(vfjt).*m.vFourier(:,:,1:Ny/2),3);        
 	phivw=phivw+conj(vfj).*m.wFourier(:,:,Ny/2+1:end)-flip(conj(vfjt).*m.wFourier(:,:,1:Ny/2),3);
@@ -124,7 +127,7 @@ phivdudz=phivdudz./nf;
 phivdvdz=phivdvdz./nf;
 phivdwdz=phivdwdz./nf;
 
-fn=sprintf('../data/vel_corr_reflect_j_%03d.mat',jcond);
+fn=sprintf('../data/vel_corr_reflect_F_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
 
 mf.Rvv=ifft2(phivv*(Nz*Nx),'symmetric');clear phivv
@@ -149,21 +152,3 @@ mf.Rvdwdy=ifft2(phivdwdy*(Nz*Nx),'symmetric');clear phivdwdy
 mf.Rvdudz=ifft2(phivdudz*(Nz*Nx),'symmetric');clear phivdudz
 mf.Rvdvdz=ifft2(phivdvdz*(Nz*Nx),'symmetric');clear phivdvdz
 mf.Rvdwdz=ifft2(phivdwdz*(Nz*Nx),'symmetric');clear phivdwdz
-
-%fn=sprintf('../data/vel_corr_reflect_j_%03d.mat',jcond);
-%mf=matfile(fn,"Writable",true);
-%mf.Rvv=Rvv;
-%mf.Rvu=Rvu;
-%mf.Rvw=Rvw;
-%mf.Rvfx=Rvfx;
-%mf.yCheb=yCheb(Ny/2+1:end);
-%mf.j=jcond-Ny/2;
-%mf.Rvdudx=Rvdudx;
-%mf.Rvdvdx=Rvdvdx;
-%mf.Rvdwdx=Rvdwdx;
-%mf.Rvdudy=Rvdudy;
-%mf.Rvdvdy=Rvdvdy;
-%mf.Rvdwdy=Rvdwdy;
-%mf.Rvdudz=Rvdudz;
-%mf.Rvdvdz=Rvdvdz;
-%mf.Rvdwdz=Rvdwdz;

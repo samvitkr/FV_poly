@@ -1,15 +1,15 @@
 clear
 Ny=220;
-jcond=188;
+jcond=156;
 jc=Ny-jcond+1;
 
 mp=matfile('../data/mean_profiles.mat')
 v= sqrt( 0.5*(mp.vv(jcond,1)+mp.vv(jc,1)) );
 
-fn=sprintf('../data/lse_coeff_v_reflect_j_%03d.mat',jcond);
+fn=sprintf('../data/lse_coeff_B_j_%03d.mat',jcond);
 ml=matfile(fn);
 
-fn=sprintf('../data/lse_v_field_j_%03d.mat',jcond)
+fn=sprintf('../data/lse_v_field_B_j_%03d.mat',jcond)
 m=matfile(fn,'Writable',true);
 
 m.ulse	=	fftshift(fftshift(v*ml.L11,1),2);

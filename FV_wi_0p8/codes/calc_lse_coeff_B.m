@@ -11,30 +11,8 @@ Ny=220;
 jcond=156;
 %jc=Ny-jcond+1;
 
-
-fn=sprintf('../data/lse_coeff_j_%03d.mat',jcond);
+fn=sprintf('../data/lse_coeff_B_j_%03d.mat',jcond);
 mf=matfile(fn,"Writable",true);
-
-
-
-%mf.L11=            single(zeros(Nz,Nx, 2));
-%mf.L21=            single(zeros(Nz,Nx, 2));
-%mf.L31=            single(zeros(Nz,Nx, 2));
-%mf.L41=            single(zeros(Nz,Nx, 2));
-%mf.L51=            single(zeros(Nz,Nx, 2));
-%mf.L61=            single(zeros(Nz,Nx, 2));
-%mf.L71=            single(zeros(Nz,Nx, 2));
-%mf.L81=            single(zeros(Nz,Nx, 2));
-%mf.L91=            single(zeros(Nz,Nx, 2));
-%mf.L101=           single(zeros(Nz,Nx, 2));
-%mf.L111=           single(zeros(Nz,Nx, 2));
-%mf.L121=           single(zeros(Nz,Nx, 2));
-%mf.L131=           single(zeros(Nz,Nx, 2));
-%mf.L141=           single(zeros(Nz,Nx, 2));
-%mf.L151=           single(zeros(Nz,Nx, 2));
-%mf.L161=           single(zeros(Nz,Nx, 2));
-%mf.L171=           single(zeros(Nz,Nx, 2));
-
 
 L11=		single(zeros(Nz,Nx,Ny/2));
 L21=		single(zeros(Nz,Nx,Ny/2));
@@ -54,20 +32,18 @@ L151=           single(zeros(Nz,Nx,Ny/2));
 L161=           single(zeros(Nz,Nx,Ny/2));
 L171=           single(zeros(Nz,Nx,Ny/2));
 
-
-%m=matfile(fn);
 fn=sprintf('../data/vel_corr_reflect_j_%03d.mat',jcond);
-%m=matfile(fn);
-load(fn);
-%jc=j;
-uij=[Rvv(1,1,jcond-Ny/2)];...,Rvw(1,1,jc)];...
-    %Rwu(1,1,jc),Rwv(1,1,jc),Rww(1,1,jc)];
+m=matfile(fn);
+uij=[m.Rvv(1,1,jcond-Ny/2)];
 uij=uij.';
+clear m
+
+fn=sprintf('../data/vel_corr_reflect_B_j_%03d.mat',jcond);
+load(fn)
 
 for j=1:Ny/2
     j
     	for k=1:Nz
-%	    k
         for i=1:Nx
             Rij=[Rvu(k,i,j),Rvv(k,i,j),Rvw(k,i,j),...
 		Rvdudx(k,i,j),Rvdvdx(k,i,j),Rvdwdx(k,i,j),...
@@ -75,7 +51,6 @@ for j=1:Ny/2
                 Rvdudz(k,i,j),Rvdvdz(k,i,j),Rvdwdz(k,i,j),...
 		Rvvoz(k,i,j),Rvwoy(k,i,j),...
 		Rvfx(k,i,j),Rvfy(k,i,j),Rvfz(k,i,j)];
-               % Rwu(k,i,j),Rwv(k,i,j),Rww(k,i,j)];
             Rij=Rij.';
             L=Rij/(uij);
             L11(k,i,j)=	single(real(L(1,1)));
@@ -116,5 +91,3 @@ end
 	mf.L151=L151;
         mf.L161=L161;
         mf.L171=L171;
-		
-
