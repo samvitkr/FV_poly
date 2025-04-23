@@ -1,23 +1,29 @@
-Nx=512;
-Ny=220;
-Nz=384;
-jcond=194;
+%Nx=512;
+%Ny=220;
+%Nz=384;
+jcond=171;
 fvgd2=sprintf("../data/velgradfield_dfil_lseQ2_j_%03d.mat",jcond);
 fvgu2=sprintf("../data/velgradfield_ufil_lseQ2_j_%03d.mat",jcond);
 fvgd4=sprintf("../data/velgradfield_dfil_lseQ4_j_%03d.mat",jcond);
 fvgu4=sprintf("../data/velgradfield_ufil_lseQ4_j_%03d.mat",jcond);
 fvgn=[fvgd2; fvgu2; fvgd4; fvgu4];
-fvg2=sprintf("../data/velgradfield_lseQ2_j_%03d.mat",jcond);
-fvg4=sprintf("../data/velgradfield_lseQ4_j_%03d.mat",jcond);
+%fvg2=sprintf("../data/velgradfield_lseQ2_j_%03d.mat",jcond);
+%fvg4=sprintf("../data/velgradfield_lseQ4_j_%03d.mat",jcond);
+
+fvg2=sprintf("../data/conditionalp_jcond_%03d.mat",jcond);
+fvg4=sprintf("../data/conditionaln_jcond_%03d.mat",jcond);
+
+
 fvgq=[fvg2 fvg4];
-fvgoz=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
-mm=matfile('../data/mean_profile.mat')
+%fvgoz=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
+%mm=matfile('../data/mean_profile.mat')
 for nn=1:2
 %fvg=fvgoz;
 fvg=fvgq(nn);	
 mvg=matfile(fvg,'Writable',true)
 
-
+[Nz Nx Ny]=size(mvg.dudx);
+Ny=2*Ny;
 S_11	=single(zeros(Nz,Nx,Ny/2));
 S_12	=single(zeros(Nz,Nx,Ny/2));
 S_13	=single(zeros(Nz,Nx,Ny/2));
