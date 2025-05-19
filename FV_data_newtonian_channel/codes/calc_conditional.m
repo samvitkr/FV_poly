@@ -14,20 +14,23 @@ dz=Lz/Nz;
 nf=1;
 
 tstart=0000;
-%tend=00000;
 tend=100000;
+%tend=100000;
 %tend=0;
 tstep=1000;
 nf=(tend-tstart)/tstep+1;
 %load('lambda_stats.mat')
-itarget=257;
-ktarget=193;
-wini=round(1/dx);
-wink=round(1/dz);
+itarget=Nx/2+1;
+ktarget=Nz/2+1;
+xbox=1;
+zbox=0.8;
+wini=round(xbox/dx);
+wink=round(zbox/dz);
 winiav=round(0.5*wini);
 winkav=round(0.5*wink);
 nzav=2*winkav+1;
 nxav=2*winiav+1;
+event_location=[];
 
 counter=0;
 mp=matfile('../data/mean_profiles.mat')
@@ -118,6 +121,7 @@ for time=tstart:tstep:tend
     [kloc, iloc] = ind2sub(s,I);
     vjc=vj;
     while(abs(M)>abs(vthreshold))
+	event_location=[event_location;kloc iloc jcond time];
 
         counter=counter+1;
         kdelta=ktarget-kloc;
@@ -192,6 +196,8 @@ for time=tstart:tstep:tend
     vjc=vjt;
 
     while(abs(M)>abs(vthreshold))
+        	event_location=[event_location;kloc iloc jc time];
+
         counter=counter+1;
         kdelta=ktarget-kloc;
         idelta=itarget-iloc;
