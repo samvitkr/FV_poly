@@ -13,8 +13,8 @@ dx=Lx/Nx;
 dz=Lz/Nz;
 nf=1;
 
-tstart=10000;
-tend=108000;
+tstart=0000;
+tend=240000;
 %tend=100000;
 %tend=0;
 tstep=1000;

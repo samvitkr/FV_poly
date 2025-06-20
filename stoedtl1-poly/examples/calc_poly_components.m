@@ -16,8 +16,9 @@ ngy = 321;  %        ghost points do not have to be included here, they are acco
 ngz = 385;
 nCheb = 220;  % number of Chebyshev collocation points in y (has to be determined a priori)
 Lz = 2.0 * pi;
-dataFolder = fullfile(getenv('HOME'), 'research_data', 'polymer');
-Wi=0.8;
+%dataFolder = fullfile(getenv('HOME'), 'research_data', 'polymer');
+dataFolder ='/vast/geyink1/skumar67/FV_data/wi13p5'
+Wi=13.5;
 beta=0.9;
 L_max=100;
 a=1-3/L_max^2;
@@ -26,7 +27,7 @@ re=4667
 %runFolder = fullfile(dataFolder, runName);
 %runFolder= 'C:\Users\samvi\Dropbox\SimonsProject\Finite_Vol_data\Visco_data_sample';
 %runFolder='/home/skumar67/data-geyink1/skumar67/FV_visco';
-runFolder='/home/skumar67/data-geyink1/skumar67/FV_wi_0p8'
+runFolder='/home/skumar67/data-geyink1/skumar67/FV_poly_codes/FV_wi_13p5/data'
 %runFolder='/home/skumar67/data-geyink1/skumar67/FV_data_'
 
 [xGridPointsDns, yGridPointsDns, ~, ~] = read_grid(runFolder, ngx, ngy);
@@ -44,8 +45,8 @@ ft = SpatialFourierTransform();
 %piozF=zeros(ngz-1,ngx-1,nCheb);
 
 
-fstart=10000;
-fend=108000;
+fstart=0000;
+fend=240000;
 fskip=1000;
 nf=(fend-fstart)/fskip+1;
 for fileNr=fstart:fskip:fend
@@ -54,7 +55,7 @@ fileNr
 % read DNS data: Cartesian velocities and confirmation tensor in physical domain, represented on staggered grid
 fileNrString = num2str(fileNr, '%07d');
 %[u, v, w] = read_velocity(runFolder, fileNrString, ngx, ngy, ngz);  % these arrays still contain ghost points
-confTensor = read_confirmation_tensor(runFolder, fileNrString, ngx, ngy, ngz);
+confTensor = read_confirmation_tensor(dataFolder, fileNrString, ngx, ngy, ngz);
 %[u, v, w] = remove_velocity_ghost_points(u, v, w);
 confTensor = remove_confirmation_tensor_ghost_points(confTensor);
 

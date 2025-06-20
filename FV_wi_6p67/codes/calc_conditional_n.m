@@ -13,8 +13,8 @@ dx=Lx/Nx;
 dz=Lz/Nz;
 nf=1;
 
-tstart=10000;
-tend=108000;
+tstart=0000;
+tend=120000;
 %tend=100000;
 %tend=0;
 tstep=1000;
@@ -129,7 +129,7 @@ for time=tstart:tstep:tend
     %bottom half
     disp('bot')
 
-    [M,I] = max(vj(:));
+    [M,I] = min(vj(:));
 
     [kloc, iloc] = ind2sub(s,I);
     vjc=vj;
@@ -144,7 +144,7 @@ for time=tstart:tstep:tend
         vjc(ktarget-wink:ktarget+wink,itarget-wini:itarget+wini)=NaN;
 
         vjc=circshift(vjc,[-kdelta -idelta]);
-        [M,I] = max(vjc(:));
+        [M,I] = min(vjc(:));
         [kloc, iloc] = ind2sub(s,I);
 
         ufieldb=circshift( ufieldb ,[kdelta idelta]);
@@ -216,7 +216,7 @@ for time=tstart:tstep:tend
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%    top half
     disp('top')
-    [M,I] = min(vjt(:));
+    [M,I] = max(vjt(:));
     [kloc, iloc] = ind2sub(s,I);
     vjc=vjt;
 
@@ -229,7 +229,7 @@ for time=tstart:tstep:tend
         temp=circshift(vjc,[kdelta idelta]);
         temp(ktarget-wink:ktarget+wink,itarget-wini:itarget+wini)=NaN;
         vjc=circshift(temp,[-kdelta -idelta]);
-        [M,I] = min(vjc(:));
+        [M,I] = max(vjc(:));
         [kloc, iloc] = ind2sub(s,I);
 
         ufieldt	=circshift( ufieldt	,[kdelta idelta]);
@@ -305,7 +305,7 @@ for time=tstart:tstep:tend
 
 end
 counter
-fc=sprintf("../data/conditionalp_jcond_%03d.mat",jcond);
+fc=sprintf("../data/conditionaln_jcond_%03d.mat",jcond);
 mc=matfile(fc,'Writable',true);
 mc.u=un./counter;
 mc.v=vn./counter;

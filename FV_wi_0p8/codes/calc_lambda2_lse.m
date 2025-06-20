@@ -1,43 +1,62 @@
-jcond=156;
-fvgp=sprintf('../data/lsevp_field_tot_B_j_%03d.mat',jcond)
-fvgn=sprintf('../data/lsevn_field_tot_B_j_%03d.mat',jcond)
+%Nx=512;
+%Ny=220;
+%Nz=384;
+jcond=171;
+%fvgd2=sprintf("../data/velgradfield_dfil_lseQ2_j_%03d.mat",jcond);
+%fvgu2=sprintf("../data/velgradfield_ufil_lseQ2_j_%03d.mat",jcond);
+%fvgd4=sprintf("../data/velgradfield_dfil_lseQ4_j_%03d.mat",jcond);
+%fvgu4=sprintf("../data/velgradfield_ufil_lseQ4_j_%03d.mat",jcond);
+%fvgn=[fvgd2; fvgu2; fvgd4; fvgu4];
+%fvg2=sprintf("../data/velgradfield_lseQ2_j_%03d.mat",jcond);
+%fvg4=sprintf("../data/velgradfield_lseQ4_j_%03d.mat",jcond);
 
-m1=matfile(fvgp,'Writable',true)
-m2=matfile(fvgn,'Writable',true)
+fvg2=sprintf("../data/conditionalp_jcond_%03d.mat",jcond);
+fvg4=sprintf("../data/conditionaln_jcond_%03d.mat",jcond);
 
-fvgq=[fvgp fvgn];
+
+fvgq=[fvg2 fvg4];
+%fvgoz=sprintf('../data/velgrad_voz_field_lseQ4ozp_j_%03d.mat',jcond);
+%mm=matfile('../data/mean_profile.mat')
 for nn=1:2
-
-	switch nn
-	case 1
-		mvg=m1;
-	case 2
-		mvg=m2;
-	end
 %fvg=fvgoz;
-%fvg=fvgq(nn);	
-%mvg=matfile(fvg,'Writable',true)
+fvg=fvgq(nn);	
+mvg=matfile(fvg,'Writable',true)
 
+[Nz Nx Ny]=size(mvg.dudx);
+Ny=2*Ny;
+S_11	=single(zeros(Nz,Nx,Ny/2));
+S_12	=single(zeros(Nz,Nx,Ny/2));
+S_13	=single(zeros(Nz,Nx,Ny/2));
+S_22	=single(zeros(Nz,Nx,Ny/2));
+S_23	=single(zeros(Nz,Nx,Ny/2));
+S_33	=single(zeros(Nz,Nx,Ny/2));
+O_21	=single(zeros(Nz,Nx,Ny/2));
+O_13	=single(zeros(Nz,Nx,Ny/2));
+O_32	=single(zeros(Nz,Nx,Ny/2));
+lambda2	=single(zeros(Nz,Nx,Ny/2));
+Q	=single(zeros(Nz,Nx,Ny/2));
+fl=size(mvg.dudy);
+if(fl(3)>Ny/2)
+	mvg.u=mvg.u(1:end,1:end,111:end);
+	mvg.v=mvg.v(1:end,1:end,111:end);
+	mvg.w=mvg.w(1:end,1:end,111:end);
+	mvg.dudx=mvg.dudx(1:end,1:end,111:end);
+	mvg.dvdx=mvg.dvdx(1:end,1:end,111:end);
+	mvg.dwdx=mvg.dwdx(1:end,1:end,111:end);
+	mvg.dudy=mvg.dudy(1:end,1:end,111:end);
+        mvg.dvdy=mvg.dvdy(1:end,1:end,111:end);
+        mvg.dwdy=mvg.dwdy(1:end,1:end,111:end);
+	mvg.dudz=mvg.dudz(1:end,1:end,111:end);
+        mvg.dvdz=mvg.dvdz(1:end,1:end,111:end);
+        mvg.dwdz=mvg.dwdz(1:end,1:end,111:end);
 
-[Nz Nx Ny]=size(mvg.u);
-
-S_11	=single(zeros(Nz,Nx,Ny));
-S_12	=single(zeros(Nz,Nx,Ny));
-S_13	=single(zeros(Nz,Nx,Ny));
-S_22	=single(zeros(Nz,Nx,Ny));
-S_23	=single(zeros(Nz,Nx,Ny));
-S_33	=single(zeros(Nz,Nx,Ny));
-O_21	=single(zeros(Nz,Nx,Ny));
-O_13	=single(zeros(Nz,Nx,Ny));
-O_32	=single(zeros(Nz,Nx,Ny));
-lambda2	=single(zeros(Nz,Nx,Ny));
-Q	=single(zeros(Nz,Nx,Ny));
+end
 
 S_11=mvg.dudx;
-S_12=0.5*(mvg.dudy+mvg.dvdx);
-S_13=0.5*(mvg.dudz+mvg.dwdx);
+S_12=0.5*( mvg.dudy+mvg.dvdx );
+S_13=0.5*( mvg.dudz+mvg.dwdx );
 S_22=mvg.dvdy;
-S_23=0.5*(mvg.dwdy+mvg.dvdz);
+S_23=0.5*( mvg.dwdy+mvg.dvdz );
 S_33=mvg.dwdz;
 
 omegaZ=mvg.dvdx-mvg.dudy;
@@ -53,7 +72,7 @@ S = zeros(3,3);
 for j =1:Nz
 	j
         for i =1:Nx
-        for k =1:Ny
+        for k =1:Ny/2
         S(1,1) = S_11(j,i,k);%mvg.dudx(i,j,k);
         S(1,2) = S_12(j,i,k);%0.5*( mvg.dudy(i,j,k) +mvg.dvdx(i,j,k) );
         S(1,3) = S_13(j,i,k);%0.5*( mvelgz.dudz(i,j,kstart+k)+mvg.dwdx(i,j,k));
